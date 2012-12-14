@@ -18,16 +18,16 @@ namespace Simple.ServiceBus.Autofac
             return new BuilderInitialized(builder);
         }
 
-        public static IHandlersRegistered RegisterHandlers(this BuilderInitialized builder, Assembly assembly)
+        public static ISimpleBusConfigurator RegisterHandlers(this BuilderInitialized builder, Assembly assembly)
         {
             builder.Builder.RegisterAssemblyTypes(assembly)
                 .Where(x => x.GetInterfaces().Contains(typeof(IHandle)))
                 .AsImplementedInterfaces();
 
-            return new HandlersRegistered(builder.Builder);
+            return new SimpleBusConfigurator(builder.Builder);
         }
 
-        public static ContainerBuilder ListenFor<T>(this IHandlersRegistered builder)
+        public static ISimpleBusConfigurator ListenFor<T>(this ISimpleBusConfigurator builder)
         {
             var b = builder.Builder;
             b.RegisterType<AutofacHandler<T>>()
@@ -38,12 +38,12 @@ namespace Simple.ServiceBus.Autofac
                         .Activating += (s,e) => ((IServiceBus)e.Instance).Subscribe(e.Context.Resolve<IAutofacHandler<T>>())
                 );
             
-            return b;
+            return builder;
         }
 
-        public static ContainerBuilder Subscribe<T>(this ContainerBuilder builder, Action<T> handler)
+        public static ISimpleBusConfigurator Subscribe<T>(this ISimpleBusConfigurator builder, Action<T> handler)
         {
-            var b = builder;
+            var b = builder.Builder;
             b.RegisterCallback(x => x
                 .RegistrationsFor(
                     new TypedService(typeof(IServiceBus))).First()
@@ -52,26 +52,14 @@ namespace Simple.ServiceBus.Autofac
 
             return builder;
         }
-    }
 
-    public interface IHandlersRegistered
-    {
-        ContainerBuilder Builder { get; }
-    }
-
-    public class HandlersRegistered : IHandlersRegistered
-    {
-
-        public HandlersRegistered(ContainerBuilder builder)
+        public static IContainer Build(this ISimpleBusConfigurator builder)
         {
-            Builder = builder;
+            return builder.Builder.Build();
         }
-
-        public ContainerBuilder Builder { get; private set; }
-
     }
 
-    public class BuilderInitialized : IBuilderInitialized
+    public class BuilderInitialized 
     {
         public BuilderInitialized(ContainerBuilder builder)
         {
@@ -80,8 +68,19 @@ namespace Simple.ServiceBus.Autofac
 
         internal ContainerBuilder Builder { get; private set; }
     }
-
-    public interface IBuilderInitialized
+    
+    public interface ISimpleBusConfigurator
     {
+        ContainerBuilder Builder { get; } 
+    }
+
+    public class SimpleBusConfigurator : ISimpleBusConfigurator
+    {
+        public SimpleBusConfigurator(ContainerBuilder containerBuilder)
+        {
+            Builder = containerBuilder;
+        }
+
+        public ContainerBuilder Builder { get; private set; }
     }
 }
