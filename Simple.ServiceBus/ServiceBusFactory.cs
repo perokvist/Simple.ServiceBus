@@ -17,7 +17,7 @@ namespace Simple.ServiceBus
             return new ServiceBus(new SubscriptionManager(
                 new SubscriptionClientFactory(messagingFactory, 
                         new SubscriptionRepository(namespaceManager, 
-                        new TopicRepository(namespaceManager)))
+                        new TopicRepository(namespaceManager))) //TODO fix ugly dependencies 
                     , new Infrastructure.MessageReceiver()),
                 new MessageDispatcher(new TopicClientFactory(messagingFactory)));
         }

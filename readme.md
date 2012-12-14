@@ -29,3 +29,19 @@ var container = new ContainerBuilder()
         }
     }
 ```
+
+#Next
+
+* Remove IHandle (or add helper base class, iik!)
+* Add Configuration support for SubscriptionClient sufix
+* Add Configuration support to ListenFor<>
+
+```
+var container = new ContainerBuilder()
+                .RegisterServiceBus()
+                .RegisterHandlers(System.Reflection.Assembly.GetExecutingAssembly())
+                .ListenFor<SimpleMessage>(c => configuration...)
+                .Build();
+
+            var serviceBus = container.Resolve<IServiceBus>();
+ ```

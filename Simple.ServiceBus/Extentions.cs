@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Simple.ServiceBus.Infrastructure;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,12 @@ namespace Simple.ServiceBus
             {
                 action(item);
             }
+        }
+
+        public static IServiceBus Subscribe<T>(this IServiceBus bus, Action<T> handler)
+        {
+            bus.Subscribe(new Handler<T>(handler));
+            return bus;
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Simple.ServiceBus.Infrastructure
 
         public SubscriptionDescription Get<T>()
         {
-            var subscriptionName = string.Format("Subscription_{0}_{1}", typeof(T).Name, Guid.NewGuid().ToString().Substring(0,10));
+            var subscriptionName = string.Format("Subscription_{0}_{1}", typeof(T).Name, Guid.NewGuid()).Substring(0, 50); //TODO configure sufix
             var topic = _topicRepository.Get<T>();
 
             SubscriptionDescription subscription;

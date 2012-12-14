@@ -18,12 +18,11 @@ namespace BusDemoClient
             var container = new ContainerBuilder()
                 .RegisterServiceBus()
                 .RegisterHandlers(System.Reflection.Assembly.GetExecutingAssembly())
-                //.ListenFor<SimpleMessage>()
-                //.Subscribe<SimpleMessage>(x => Console.WriteLine(string.Format("Received (delegate) '{0}' with message id of {1}", x.Title, x.Id)))
                 .Builder.Build();
 
             var serviceBus = container.Resolve<IServiceBus>();
             serviceBus.Subscribe(new Handler<SimpleMessage>(x => Console.WriteLine(string.Format("Received (delegate) '{0}' with message id of {1}", x.Title, x.Id))));
+            Console.WriteLine("Waiting for messages.....");
             var message = Console.ReadLine();
         }
     }
