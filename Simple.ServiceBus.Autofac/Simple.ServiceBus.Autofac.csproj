@@ -52,6 +52,9 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="ServiceBusModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimpleBusConfigurator.cs" />
+    <Compile Include="SubscriptionConfigurationRepository.cs" />
+    <Compile Include="SubscriptionConfigurator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

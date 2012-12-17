@@ -47,31 +47,35 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Infrastructure\Handler.cs" />
-    <Compile Include="Infrastructure\IMessageDispatcher.cs" />
-    <Compile Include="Infrastructure\IMessageReceiver.cs" />
-    <Compile Include="Infrastructure\ISubscriptionClientFactory.cs" />
-    <Compile Include="Infrastructure\ISubscriptionManager.cs" />
-    <Compile Include="Infrastructure\ISubscriptionRepository.cs" />
-    <Compile Include="Infrastructure\ITopicClientFactory.cs" />
-    <Compile Include="Infrastructure\ITopicRepository.cs" />
-    <Compile Include="Infrastructure\MessageDispatcher.cs" />
-    <Compile Include="Infrastructure\MessageReceiver.cs" />
-    <Compile Include="Infrastructure\SubscriptionClientFactory.cs" />
-    <Compile Include="Infrastructure\SubscriptionManager.cs" />
-    <Compile Include="Infrastructure\SubscriptionRepository.cs" />
-    <Compile Include="Infrastructure\TopicClientFactory.cs" />
-    <Compile Include="Infrastructure\TopicRepository.cs" />
     <Compile Include="Extentions.cs" />
     <Compile Include="IHandler.cs" />
+    <Compile Include="Publishing\IMessageDispatcher.cs" />
+    <Compile Include="Publishing\ITopicClientFactory.cs" />
+    <Compile Include="Publishing\ITopicRepository.cs" />
+    <Compile Include="Publishing\MessageDispatcher.cs" />
+    <Compile Include="Publishing\TopicClientFactory.cs" />
+    <Compile Include="Publishing\TopicRepository.cs" />
     <Compile Include="ServiceBus.cs" />
     <Compile Include="IServiceBus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceBusFactory.cs" />
+    <Compile Include="Subscription\IMessageReceiver.cs" />
+    <Compile Include="Subscription\ISubscriptionClientFactory.cs" />
+    <Compile Include="Subscription\ISubscriptionConfigurationRepository.cs" />
+    <Compile Include="Subscription\ISubscriptionManager.cs" />
+    <Compile Include="Subscription\ISubscriptionRepository.cs" />
+    <Compile Include="Subscription\MessageReceiver.cs" />
+    <Compile Include="Subscription\SubscriptionClientFactory.cs" />
+    <Compile Include="Subscription\SubscriptionConfiguration.cs" />
+    <Compile Include="Subscription\SubscriptionConfigurationRepository.cs" />
+    <Compile Include="Subscription\SubscriptionManager.cs" />
+    <Compile Include="Subscription\SubscriptionRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

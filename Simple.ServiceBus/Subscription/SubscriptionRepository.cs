@@ -1,8 +1,9 @@
+using System;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
-using System;
+using Simple.ServiceBus.Publishing;
 
-namespace Simple.ServiceBus.Infrastructure
+namespace Simple.ServiceBus.Subscription
 {
     public class SubscriptionRepository : ISubscriptionRepository
     {

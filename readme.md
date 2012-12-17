@@ -1,6 +1,6 @@
 #Simple.ServiceBus
 
-Wrapper for the Windows Service Bus. 
+Library for simple pub/sub for the Windows Service Bus. 
 
 ##Example
 
@@ -8,7 +8,7 @@ Wrapper for the Windows Service Bus.
 var container = new ContainerBuilder()
                 .RegisterServiceBus()
                 .RegisterHandlers(System.Reflection.Assembly.GetExecutingAssembly())
-                .ListenFor<SimpleMessage>()
+                .ListenFor<SimpleMessage>().Configure(c => c.ReceiveMode = ReceiveMode.ReceiveAndDelete)
                 .Subscribe<SimpleMessage>(x => Console.WriteLine(string.Format("Received (delegate) '{0}' with message id of {1}", x.Title, x.Id)))
                 .Build();
 
@@ -34,14 +34,3 @@ var container = new ContainerBuilder()
 
 * Remove IHandle (or add helper base class, iik!)
 * Add Configuration support for SubscriptionClient sufix
-* Add Configuration support to ListenFor<>
-
-```
-var container = new ContainerBuilder()
-                .RegisterServiceBus()
-                .RegisterHandlers(System.Reflection.Assembly.GetExecutingAssembly())
-                .ListenFor<SimpleMessage>(c => configuration...)
-                .Build();
-
-            var serviceBus = container.Resolve<IServiceBus>();
- ```

@@ -1,12 +1,13 @@
 ﻿using Autofac;
-using Autofac.Core;
-using Simple.ServiceBus.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Autofac.Core;
+using Simple.ServiceBus.Infrastructure;
+using Simple.ServiceBus.Subscription;
 
 namespace Simple.ServiceBus.Autofac
 {
@@ -27,31 +28,15 @@ namespace Simple.ServiceBus.Autofac
             return new SimpleBusConfigurator(builder.Builder);
         }
 
-        public static ISimpleBusConfigurator ListenFor<T>(this ISimpleBusConfigurator builder)
+        public static ISimpleBusConfigurator RegisterConfiguration(this ISimpleBusConfigurator builder, Assembly assembly)
         {
-            var b = builder.Builder;
-            b.RegisterType<AutofacHandler<T>>()
-             .As<IAutofacHandler<T>>();
-            b.RegisterCallback(x => x
-                .RegistrationsFor(
-                    new TypedService(typeof(IServiceBus))).First()
-                        .Activating += (s,e) => ((IServiceBus)e.Instance).Subscribe(e.Context.Resolve<IAutofacHandler<T>>())
-                );
-            
-            return builder;
+            builder.Builder.RegisterAssemblyTypes(assembly)
+                .Where(x => x.GetInterfaces().Contains(typeof(ISubscriptionConfiguration<>)))
+                .AsImplementedInterfaces();
+
+            return new SimpleBusConfigurator(builder.Builder);
         }
 
-        public static ISimpleBusConfigurator Subscribe<T>(this ISimpleBusConfigurator builder, Action<T> handler)
-        {
-            var b = builder.Builder;
-            b.RegisterCallback(x => x
-                .RegistrationsFor(
-                    new TypedService(typeof(IServiceBus))).First()
-                        .Activating += (s, e) => ((IServiceBus)e.Instance).Subscribe(new Handler<T>(handler))
-                );
-
-            return builder;
-        }
 
         public static IContainer Build(this ISimpleBusConfigurator builder)
         {
@@ -65,22 +50,25 @@ namespace Simple.ServiceBus.Autofac
         {
             Builder = builder;
         }
-
+        
         internal ContainerBuilder Builder { get; private set; }
     }
-    
-    public interface ISimpleBusConfigurator
+
+    public interface ISubscriptionConfigurator<T> : IBuilderAccessor
     {
-        ContainerBuilder Builder { get; } 
+        ISimpleBusConfigurator Configure(Action<ISubscriptionConfiguration<T>> action);
+        ISimpleBusConfigurator WithContainerConfig();
+
     }
 
-    public class SimpleBusConfigurator : ISimpleBusConfigurator
+    public interface ISimpleBusConfigurator : IBuilderAccessor
     {
-        public SimpleBusConfigurator(ContainerBuilder containerBuilder)
-        {
-            Builder = containerBuilder;
-        }
+        ISimpleBusConfigurator Subscribe<T>(Action<T> handler);
+        ISubscriptionConfigurator<T> ListenFor<T>();
+    }
 
-        public ContainerBuilder Builder { get; private set; }
+    public interface IBuilderAccessor
+    {
+        ContainerBuilder Builder { get; }
     }
 }

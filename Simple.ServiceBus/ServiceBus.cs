@@ -6,6 +6,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Simple.ServiceBus.Infrastructure;
+using Simple.ServiceBus.Publishing;
+using Simple.ServiceBus.Subscription;
 
 namespace Simple.ServiceBus
 {

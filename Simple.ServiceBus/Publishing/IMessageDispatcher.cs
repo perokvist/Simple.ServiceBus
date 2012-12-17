@@ -1,4 +1,4 @@
-namespace Simple.ServiceBus.Infrastructure
+namespace Simple.ServiceBus.Publishing
 {
     public interface IMessageDispatcher
     {

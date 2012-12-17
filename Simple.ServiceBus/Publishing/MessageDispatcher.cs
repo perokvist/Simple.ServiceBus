@@ -1,7 +1,8 @@
 using System;
 using Microsoft.ServiceBus.Messaging;
+using Simple.ServiceBus.Infrastructure;
 
-namespace Simple.ServiceBus.Infrastructure
+namespace Simple.ServiceBus.Publishing
 {
     public class MessageDispatcher : IMessageDispatcher
     {
