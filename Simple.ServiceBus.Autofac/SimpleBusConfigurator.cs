@@ -15,10 +15,9 @@ namespace Simple.ServiceBus.Autofac
 
         public ISubscriptionConfigurator<T> ListenFor<T>()
         {
-            var b = Builder;
-            b.RegisterType<AutofacHandler<T>>()
+            Builder.RegisterType<AutofacHandler<T>>()
                 .As<IAutofacHandler<T>>();
-            b.RegisterCallback(x => x
+            Builder.RegisterCallback(x => x
                                         .RegistrationsFor(
                                             new TypedService(typeof(IServiceBus))).First()
                                         .Activating += (s, e) => ((IServiceBus)e.Instance).Subscribe(e.Context.Resolve<IAutofacHandler<T>>())
