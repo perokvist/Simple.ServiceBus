@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+    <metadata>
+        <id>Simple.ServiceBus.Autofac</id>
+        <version>0.1.0-alpha</version>
+        <title>Simple.ServiceBus.AutoFac</title>
+        <authors>Per Ökvist</authors>
+        <owners />
+        <licenseUrl>http://opensource.org/licenses/MS-PL</licenseUrl>
+        <projectUrl>https://github.com/perokvist/Simple.ServiceBus</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>A simple library for Simple.ServiceBus. Adds fluent configuration for Autofac use.</description>
+        <tags>Windows Server Service Bus, Azure, Service Bus</tags>
+        <dependencies>
+            <group targetFramework=".NETFramework4.5">
+                <dependency id="Simple.ServiceBus" version="0.1.0-alpha" />
+                <dependency id="Autofac" version="2.6.3.862" />
+            </group>
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="bin\Release\Simple.ServiceBus.Autofac.dll" target="lib\net45\Simple.ServiceBus.Autofac.dll" />
+    </files>
+</package>

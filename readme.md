@@ -34,3 +34,8 @@ var container = new ContainerBuilder()
 
 * Remove IHandle (or add helper base class, iik!)
 * Add Configuration support for SubscriptionClient sufix
+
+### Downloads
+
+Download from NuGet 'Simple.ServiceBus' [Search NuGet for Simple.ServiceBus](http://nuget.org/packages?q=simple.servicebus&prerelease=true&sortOrder=relevance)
+
