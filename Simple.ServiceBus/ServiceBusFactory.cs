@@ -17,13 +17,14 @@ namespace Simple.ServiceBus
         public IServiceBus Create() {
             var messagingFactory = MessagingFactory.Create(); 
             var namespaceManager = NamespaceManager.Create();
+            var topicRepository = new TopicRepository(namespaceManager);
             return new ServiceBus(new SubscriptionManager(
                 new SubscriptionClientFactory(messagingFactory,  
                         new SubscriptionRepository(namespaceManager,
-                        new TopicRepository(namespaceManager))), //TODO fix ugly dependencies 
+                        topicRepository)), //TODO fix ugly dependencies 
                     new MessageReceiver(), 
                     new SubscriptionConfigurationRepository()),
-                new MessageDispatcher(new TopicClientFactory(messagingFactory)));
+                new MessageDispatcher(new TopicClientFactory(messagingFactory, topicRepository)));
         }
     }
 }
