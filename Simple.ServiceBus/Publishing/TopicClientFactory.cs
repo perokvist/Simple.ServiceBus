@@ -6,16 +6,18 @@ namespace Simple.ServiceBus.Publishing
     public class TopicClientFactory : ITopicClientFactory
     {
         private readonly MessagingFactory _messagingFactory;
+        private readonly ITopicRepository _topicRepository;
 
-        public TopicClientFactory(MessagingFactory messagingFactory)
+        public TopicClientFactory(MessagingFactory messagingFactory, ITopicRepository topicRepository)
         {
             _messagingFactory = messagingFactory;
+            _topicRepository = topicRepository;
         }
 
         public TopicClient CreateFor<T>()
         {
-            var topicName = string.Format("Topic_{0}", typeof(T).Name);
-            return _messagingFactory.CreateTopicClient(topicName);
+            var topic = _topicRepository.Get<T>();
+            return _messagingFactory.CreateTopicClient(topic.Path);
         }
 
     }
