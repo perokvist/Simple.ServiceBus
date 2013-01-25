@@ -36,6 +36,7 @@ var container = new ContainerBuilder()
 * Add Configuration support for SubscriptionClient sufix
 * Possiblity to unsubscribe, close client via SubscriptoinMangager
 * Commadning scenario, Maybe a version of listen for named process, that only allows one recipient
+* Command scenario, proccessmanager that start/stop subscription of registered handlers
 * Send message with beginSend, endSend
 * Retrieve and process messages async/parallel
 * Deadletter/fault handling
