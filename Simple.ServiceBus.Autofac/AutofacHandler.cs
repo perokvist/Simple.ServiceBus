@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Simple.ServiceBus.Autofac
 {
-    public interface  IAutofacHandler<T> : IHandle<T>
+    public interface  IAutofacHandler<in T> : IHandle<T>
     {
          
     }
@@ -29,7 +29,7 @@ namespace Simple.ServiceBus.Autofac
 
         public void Handle(object message)
         {
-            this.Handle((T)message);
+            this.Handle((dynamic)message);
         }
     }
 }

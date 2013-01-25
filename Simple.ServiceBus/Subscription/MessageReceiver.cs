@@ -7,36 +7,24 @@ namespace Simple.ServiceBus.Subscription
     {
         public void Receive<T>(SubscriptionClient subscriptionClient, ISubscriptionReceiveConfiguration<T> config, Action<T> action)
         {
-            //var handler = ModeHandler(action);
+            //NOTE cofig unused for now
             subscriptionClient.BeginReceive(
                 (cb) =>
                 {
                     var brokeredMessage = subscriptionClient.EndReceive(cb);
-                    if (brokeredMessage != null)
-                    {
-                        var messageData = brokeredMessage.GetBody<T>();
-                        action(messageData);
-                        if(subscriptionClient.Mode == ReceiveMode.PeekLock)
-                            brokeredMessage.Complete();
-
-                        //handler(subscriptionClient.Mode, brokeredMessage);
-                        Receive(subscriptionClient, config, action);
-                    }
+                    HandleMessage(brokeredMessage, subscriptionClient.Mode, action); 
+                    Receive(subscriptionClient, config, action);
                 },
                 null);
         }
 
-        private Action<ReceiveMode, BrokeredMessage> ModeHandler<T>(Action<T> action)
+        private static void HandleMessage<T>(BrokeredMessage message, ReceiveMode mode, Action<T> action)
         {
-            return (m, bm) =>
-                       {
-                        var messageData = bm.GetBody<T>();
-                        action(messageData);
-                           if(m == ReceiveMode.PeekLock)
-                           {
-                               bm.Complete();
-                           }
-                       };
+            if (message == null) return;
+            var messageData = message.GetBody<T>();
+            action(messageData);
+            if(mode == ReceiveMode.PeekLock)
+                message.Complete();
         }
     }
 }

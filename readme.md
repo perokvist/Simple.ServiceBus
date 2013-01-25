@@ -34,6 +34,12 @@ var container = new ContainerBuilder()
 
 * Remove IHandle (or add helper base class, iik!)
 * Add Configuration support for SubscriptionClient sufix
+* Possiblity to unsubscribe, close client via SubscriptoinMangager
+* Commadning scenario, Maybe a version of listen for named process, that only allows one recipient
+* Send message with beginSend, endSend
+* Retrieve and process messages async/parallel
+* Deadletter/fault handling
+* Transient support
 
 ### Downloads
 
