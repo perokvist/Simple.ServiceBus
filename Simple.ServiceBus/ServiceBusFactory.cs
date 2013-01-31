@@ -14,15 +14,31 @@ namespace Simple.ServiceBus
 {
     public class ServiceBusFactory
     {
-        public IServiceBus Create() {
-            var messagingFactory = MessagingFactory.Create(); 
-            var namespaceManager = NamespaceManager.Create();
-            var topicRepository = new TopicRepository(namespaceManager);
-            var observablefactory = new ObservableSubscriptionManagerFactory(
-                    new MessageReceiver(new SubscriptionClientFactory(messagingFactory, new SubscriptionRepository(namespaceManager, topicRepository))),
+        private static readonly MessagingFactory MessagingFactory = MessagingFactory.Create();
+        private static readonly NamespaceManager NamespaceManager = NamespaceManager.Create();
+        private static readonly TopicRepository TopicRepository = new TopicRepository(NamespaceManager);
+        internal static readonly ObservableSubscriptionManagerFactory ObservableSubscriptionManagerFactory = new ObservableSubscriptionManagerFactory(
+                    new MessageReceiver(new SubscriptionClientFactory(MessagingFactory, new SubscriptionRepository(NamespaceManager, TopicRepository))),
                     new SubscriptionConfigurationRepository()
                 );
-            return new ServiceBus(new SubscriptionManager(observablefactory), new MessageDispatcher(new TopicClientFactory(messagingFactory, topicRepository)));
+
+        private static readonly IServiceBus ServiceBus = new ServiceBus(
+            new SubscriptionManager(ObservableSubscriptionManagerFactory),
+            new MessageDispatcher(new TopicClientFactory(MessagingFactory, TopicRepository)));
+
+        public IServiceBus Create()
+        {
+            return ServiceBus;
+        }
+    }
+
+    public static class ObservableFactory
+    {
+
+        public static IObservable<T> Create<T>()
+        {
+            return
+               ServiceBusFactory.ObservableSubscriptionManagerFactory.Create<T>();
         }
     }
 }

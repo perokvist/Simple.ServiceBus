@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\IObserverExtensions.cs" />
     <Compile Include="Infrastructure\Handler.cs" />
     <Compile Include="Extentions.cs" />
     <Compile Include="Publishing\IMessageDispatcher.cs" />
