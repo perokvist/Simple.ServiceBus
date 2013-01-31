@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Simple.ServiceBus.Autofac
 {
-    public interface  IAutofacHandler<T> : IHandle<T>
+    public interface  IAutofacHandler<in T> : IObserver<T>
     {
          
     }
@@ -21,15 +21,25 @@ namespace Simple.ServiceBus.Autofac
             _context = context;
         }
 
-        public void Handle(T message)
+        public void OnCompleted()
         {
-            var handler = _context.Resolve<IHandle<T>>();
-            handler.Handle(message);
+            Observer.OnCompleted();
         }
 
-        public void Handle(object message)
+        public void OnError(Exception error)
         {
-            this.Handle((T)message);
+            Observer.OnError(error);
         }
+
+        public void OnNext(T value)
+        {
+            Observer.OnNext(value);
+        }
+
+        private IObserver<T> Observer
+        {
+            get { return _context.Resolve<IObserver<T>>(); }
+        } 
+
     }
 }

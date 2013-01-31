@@ -48,7 +48,6 @@
   <ItemGroup>
     <Compile Include="Infrastructure\Handler.cs" />
     <Compile Include="Extentions.cs" />
-    <Compile Include="IHandler.cs" />
     <Compile Include="Publishing\IMessageDispatcher.cs" />
     <Compile Include="Publishing\ITopicClientFactory.cs" />
     <Compile Include="Publishing\ITopicRepository.cs" />
@@ -60,11 +59,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceBusFactory.cs" />
     <Compile Include="Subscription\IMessageReceiver.cs" />
+    <Compile Include="Subscription\IObservableSubscriptionManagerFactory.cs" />
     <Compile Include="Subscription\ISubscriptionClientFactory.cs" />
     <Compile Include="Subscription\ISubscriptionConfigurationRepository.cs" />
     <Compile Include="Subscription\ISubscriptionManager.cs" />
     <Compile Include="Subscription\ISubscriptionRepository.cs" />
     <Compile Include="Subscription\MessageReceiver.cs" />
+    <Compile Include="Subscription\ObservableSubscriptionManagerFactory.cs" />
+    <Compile Include="Subscription\ObservaleSubscriptionManager.cs" />
     <Compile Include="Subscription\SubscriptionClientFactory.cs" />
     <Compile Include="Subscription\SubscriptionConfiguration.cs" />
     <Compile Include="Subscription\SubscriptionConfigurationRepository.cs" />

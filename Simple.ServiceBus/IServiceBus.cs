@@ -7,7 +7,7 @@ namespace Simple.ServiceBus
 {
     public interface IServiceBus
     {
-        void Subscribe<T>(IHandle<T> handler);
         void Publish<T>(T message);
+        void Subscribe<T>(IObserver<T> handler);
     }
 }

@@ -18,13 +18,11 @@ namespace Simple.ServiceBus
             var messagingFactory = MessagingFactory.Create(); 
             var namespaceManager = NamespaceManager.Create();
             var topicRepository = new TopicRepository(namespaceManager);
-            return new ServiceBus(new SubscriptionManager(
-                new SubscriptionClientFactory(messagingFactory,  
-                        new SubscriptionRepository(namespaceManager,
-                        topicRepository)), //TODO fix ugly dependencies 
-                    new MessageReceiver(), 
-                    new SubscriptionConfigurationRepository()),
-                new MessageDispatcher(new TopicClientFactory(messagingFactory, topicRepository)));
+            var observablefactory = new ObservableSubscriptionManagerFactory(
+                    new MessageReceiver(new SubscriptionClientFactory(messagingFactory, new SubscriptionRepository(namespaceManager, topicRepository))),
+                    new SubscriptionConfigurationRepository()
+                );
+            return new ServiceBus(new SubscriptionManager(observablefactory), new MessageDispatcher(new TopicClientFactory(messagingFactory, topicRepository)));
         }
     }
 }

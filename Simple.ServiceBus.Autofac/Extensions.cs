@@ -22,7 +22,8 @@ namespace Simple.ServiceBus.Autofac
         public static ISimpleBusConfigurator RegisterHandlers(this BuilderInitialized builder, Assembly assembly)
         {
             builder.Builder.RegisterAssemblyTypes(assembly)
-                .Where(x => x.GetInterfaces().Contains(typeof(IHandle)))
+                .Where(t => t.GetInterfaces().Where(i => i.IsGenericType)
+                .Any(contract => contract.GetGenericTypeDefinition() == typeof(IObserver<>)))
                 .AsImplementedInterfaces();
 
             return new SimpleBusConfigurator(builder.Builder);

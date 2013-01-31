@@ -35,6 +35,17 @@ var container = new ContainerBuilder()
 * Remove IHandle (or add helper base class, iik!)
 * Add Configuration support for SubscriptionClient sufix
 
+=======
+* Possiblity to unsubscribe, close client via SubscriptoinMangager
+* Commadning scenario, Maybe a version of listen for named process, that only allows one recipient
+* Command scenario, proccessmanager that start/stop subscription of registered handlers
+* Command / Event Topics, all command/events on one topic per scenario.
+* Send message with beginSend, endSend , async
+* Retrieve and process messages async/parallel
+* Deadletter/fault handling
+* Transient support
+
+
 ### Downloads
 
 Download from NuGet 'Simple.ServiceBus' [Search NuGet for Simple.ServiceBus](http://nuget.org/packages?q=simple.servicebus&prerelease=true&sortOrder=relevance)

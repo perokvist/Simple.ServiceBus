@@ -20,6 +20,7 @@ namespace Simple.ServiceBus
 
         public static IServiceBus Subscribe<T>(this IServiceBus bus, Action<T> handler)
         {
+
             bus.Subscribe(new Handler<T>(handler));
             return bus;
         }

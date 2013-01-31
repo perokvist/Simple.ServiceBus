@@ -8,16 +8,21 @@ using System.Threading.Tasks;
 
 namespace BusDemo
 {
-    public class SimpleHandler : IHandle<SimpleMessage>
+    public class SimpleHandler : IObserver<SimpleMessage>
     {
-        public void Handle(SimpleMessage message)
+        public void OnCompleted()
         {
-            Console.WriteLine(string.Format("Received (autofac) '{0}' with message id of {1}", message.Title, message.Id));
+            throw new NotImplementedException();
         }
 
-        public void Handle(object message)
+        public void OnError(Exception error)
         {
-            this.Handle((SimpleMessage) message);
+            throw new NotImplementedException();
+        }
+
+        public void OnNext(SimpleMessage value)
+        {
+            Console.WriteLine(string.Format("Received (autofac) '{0}' with message id of {1}", value.Title, value.Id));
         }
     }
 }

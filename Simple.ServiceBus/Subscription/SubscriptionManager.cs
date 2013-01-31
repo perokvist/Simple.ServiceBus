@@ -6,46 +6,30 @@ namespace Simple.ServiceBus.Subscription
 {
     public class SubscriptionManager : ISubscriptionManager
     {
-        private readonly ISubscriptionClientFactory _subscriptionClientFactory;
-        private readonly IMessageReceiver _messageReceiver;
-        private readonly ISubscriptionConfigurationRepository _subscriptionConfigurationRepository;
-        private readonly IList<Tuple<Type, IHandle>> _handlers;
+        private readonly IObservableSubscriptionManagerFactory _observableSubscriptionManagerFactory;
+        private readonly IDictionary<Type, dynamic> _observables;
 
-        public SubscriptionManager(
-            ISubscriptionClientFactory subscriptionClientFactory, 
-            IMessageReceiver messageReceiver,
-            ISubscriptionConfigurationRepository subscriptionConfigurationRepository)
+        public SubscriptionManager(IObservableSubscriptionManagerFactory observableSubscriptionManagerFactory)
         {
-            _subscriptionClientFactory = subscriptionClientFactory;
-            _messageReceiver = messageReceiver;
-            _subscriptionConfigurationRepository = subscriptionConfigurationRepository;
-            _handlers = new List<Tuple<Type, IHandle>>();
+            _observableSubscriptionManagerFactory = observableSubscriptionManagerFactory;
+            _observables = new Dictionary<Type, dynamic>();
         }
 
-        public void Subscribe<T>(IHandle<T> handler)
+        public IDisposable Subscribe<T>(IObserver<T> handler)
         {
-            if (!SubscriptionSetupFor<T>())
+            var o = GetObservable<T>();
+            return o.Subscribe(handler);
+        }
+
+        private IObservable<T> GetObservable<T>()
+        {
+            if(!_observables.ContainsKey(typeof(T)))
             {
-                var config = _subscriptionConfigurationRepository.Get<T>();
-                SetupSubscription(config);
+                var o = _observableSubscriptionManagerFactory.Create<T>();
+                _observables[typeof(T)] = o;
+                return o;
             }
-            _handlers.Add(new Tuple<Type, IHandle>(typeof(T), handler));
+            return _observables[typeof (T)];
         }
-
-        private void SetupSubscription<T>(ISubscriptionConfiguration<T> config)
-        {
-            _messageReceiver.Receive(_subscriptionClientFactory.CreateFor(config), config, x => _handlers
-                                                                                                    .Where(
-                                                                                                        h =>
-                                                                                                        h.Item1 == typeof (T))
-                                                                                                    .Select(h => h.Item2)
-                                                                                                    .ForEach(h => h.Handle(x)));
-        }
-
-        private bool SubscriptionSetupFor<T>()
-        {
-            return _handlers.Any(x => x.Item1 == typeof (T));
-        }
-        
     }
 }

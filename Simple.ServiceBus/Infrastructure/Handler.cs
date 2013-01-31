@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Simple.ServiceBus.Infrastructure
 {
-    public class Handler<T> : IHandle<T>
+    public class Handler<T> : IObserver<T>
     {
         private readonly Action<T> _action;
 
@@ -14,15 +14,20 @@ namespace Simple.ServiceBus.Infrastructure
         {
             _action = action;
         }
-
-        void IHandle<T>.Handle(T message)
+        
+        public void OnCompleted()
         {
-            Handle(message);
+
         }
 
-        public void Handle(object message)
+        public void OnError(Exception error)
         {
-            _action((T)message);
+            throw error;
+        }
+
+        public void OnNext(T value)
+        {
+            _action(value);
         }
     }
 }
