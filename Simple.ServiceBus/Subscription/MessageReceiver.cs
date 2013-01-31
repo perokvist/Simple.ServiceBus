@@ -52,7 +52,7 @@ namespace Simple.ServiceBus.Subscription
 
         }
 
-        private Action<ReceiveMode, BrokeredMessage> ModeHandler<T>(Action<T> action)
+        private void HandleMessage<T>(BrokeredMessage message, ReceiveMode mode, Action<T> action)
         {
             if (message == null) return;
             var messageData = message.GetBody<T>();
