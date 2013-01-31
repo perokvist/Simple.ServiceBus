@@ -24,5 +24,21 @@ namespace Simple.ServiceBus
             bus.Subscribe(new Handler<T>(handler));
             return bus;
         }
+
+        public static T PutIf<T>(this IDictionary<Type,T> dict, Func<T> factory)
+        {
+            return dict.PutIf(typeof (T), factory);
+        }
+
+        public static T PutIf<TKey,T>(this IDictionary<TKey, T> dict,TKey key, Func<T> factory)
+        {
+            if (!dict.ContainsKey(key))
+            {
+                var value = factory();
+                dict[key] = value;
+                return value;
+            }
+            return dict[key];
+        }
     }
 }

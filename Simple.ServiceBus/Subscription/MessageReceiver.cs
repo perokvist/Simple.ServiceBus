@@ -44,12 +44,7 @@ namespace Simple.ServiceBus.Subscription
 
         private SubscriptionClient GetClient<T>(ISubscriptionConfiguration<T> config)
         {
-            if (!_clients.ContainsKey(typeof(T)))
-            {
-                _clients[typeof(T)] = _subscriptionClientFactory.CreateFor<T>(config);
-            }
-            return _clients[typeof(T)];
-
+            return _clients.PutIf(() => _subscriptionClientFactory.CreateFor(config));
         }
 
         private void HandleMessage<T>(BrokeredMessage message, ReceiveMode mode, Action<T> action)

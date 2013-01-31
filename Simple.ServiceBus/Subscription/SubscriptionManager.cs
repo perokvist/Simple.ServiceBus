@@ -17,19 +17,13 @@ namespace Simple.ServiceBus.Subscription
 
         public IDisposable Subscribe<T>(IObserver<T> handler)
         {
-            var o = GetObservable<T>();
-            return o.Subscribe(handler);
+            var observable = GetObservable<T>();
+            return observable.Subscribe(handler);
         }
 
         private IObservable<T> GetObservable<T>()
         {
-            if(!_observables.ContainsKey(typeof(T)))
-            {
-                var o = _observableSubscriptionManagerFactory.Create<T>();
-                _observables[typeof(T)] = o;
-                return o;
-            }
-            return _observables[typeof (T)];
+            return _observables.PutIf(typeof(T), () => _observableSubscriptionManagerFactory.Create<T>());
         }
     }
 }
