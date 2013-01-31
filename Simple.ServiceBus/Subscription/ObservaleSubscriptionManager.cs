@@ -34,7 +34,11 @@ namespace Simple.ServiceBus.Subscription
         {
             if (_observers.Any()) return;
             var config = _subscriptionConfigurationRepository.Get<T>();
-            _messageReceiver.Receive(config, message => _observers.Values.ForEach(o => o.OnNext(message)), ex => _observers.Values.ForEach(o => o.OnError(ex)));
+            _messageReceiver.Receive(
+                config, 
+                message => _observers.Values.AsParallel().ForAll(o => o.OnNext(message)), 
+                ex => _observers.Values.AsParallel().ForAll(o => o.OnError(ex))
+                );
         }
 
         private void Unhsubscribe(Guid subscriptionKey)

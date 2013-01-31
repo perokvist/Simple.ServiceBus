@@ -22,10 +22,10 @@ namespace Simple.ServiceBus
             _messageDispatcher = messageDispatcher;
         }
 
-        void IServiceBus.Subscribe<T>(IObserver<T> handler)
+        IDisposable IServiceBus.Subscribe<T>(IObserver<T> handler)
         {
             //TODO clear topics
-            _subscriptionManager.Subscribe(handler);
+            return _subscriptionManager.Subscribe(handler);
         }
 
         void IServiceBus.Publish<T>(T message)

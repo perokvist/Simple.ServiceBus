@@ -8,6 +8,6 @@ namespace Simple.ServiceBus
     public interface IServiceBus
     {
         void Publish<T>(T message);
-        void Subscribe<T>(IObserver<T> handler);
+        IDisposable Subscribe<T>(IObserver<T> handler);
     }
 }
