@@ -16,7 +16,7 @@ namespace Simple.ServiceBus.Subscription
             _configurationRepository = configurationRepository;
         }
 
-        public IObservable<T> Create<T>()
+        public INamedObservable<T> Create<T>()
         {
             return new ObservaleSubscriptionManager<T>(_messageReceiver, _configurationRepository);
         }
