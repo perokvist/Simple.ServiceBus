@@ -8,66 +8,41 @@ namespace Simple.ServiceBus.Subscription
     public class ObservaleSubscriptionManager<T> : IObservable<T>
     {
         private readonly IMessageReceiver _messageReceiver;
-        private readonly ISubscriptionConfigurationRepository _subscriptionConfigurationRepository;
         private readonly IDictionary<Guid, IObserver<T>> _observers;
+        private readonly ISubscriptionConfiguration<T> _config;
 
         public ObservaleSubscriptionManager(
             IMessageReceiver messageReceiver,
             ISubscriptionConfigurationRepository subscriptionConfigurationRepository)
         {
             _messageReceiver = messageReceiver;
-            _subscriptionConfigurationRepository = subscriptionConfigurationRepository;
             _observers = new ConcurrentDictionary<Guid, IObserver<T>>();
+            _config = subscriptionConfigurationRepository.Get<T>();
         }
         
         public IDisposable Subscribe(IObserver<T> observer)
         {
-            SetupSubscription();
-            
             var subscriptionKey = Guid.NewGuid();
             _observers[subscriptionKey] = observer;
 
-            return new DisposableAction(() => Unhsubscribe(subscriptionKey));
+            var stop=_messageReceiver.Receive(_config, observer);
+
+
+            return new DisposableAction(() => Unhsubscribe(subscriptionKey,stop));
         }
 
-        private void SetupSubscription()
-        {
-            if (_observers.Any()) return;
-            var config = _subscriptionConfigurationRepository.Get<T>();
-            _messageReceiver.Receive(
-                config, 
-                message => _observers.Values.AsParallel().ForAll(o => o.OnNext(message)), 
-                ex => _observers.Values.AsParallel().ForAll(o => o.OnError(ex))
-                );
-        }
 
-        private void Unhsubscribe(Guid subscriptionKey)
+        private void Unhsubscribe(Guid subscriptionKey,IDisposable stoppable)
         {
             var o = _observers[subscriptionKey];
             _observers.Remove(subscriptionKey);
             o.OnCompleted();
             if (!_observers.Any())
             {
-                _messageReceiver.Stop<T>();
+                stoppable.Dispose();
             }
         }
 
-        internal class DisposableAction : IDisposable
-        {
-            private readonly Action _action;
-
-            public DisposableAction(Action action)
-            {
-                _action = action;
-            }
-
-            public void Dispose()
-            {
-                _action();
-            }
-        }
         
     }
-
-
 }

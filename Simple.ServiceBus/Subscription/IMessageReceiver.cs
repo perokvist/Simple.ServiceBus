@@ -5,7 +5,6 @@ namespace Simple.ServiceBus.Subscription
 {
     public interface IMessageReceiver
     {
-        void Receive<T>(ISubscriptionConfiguration<T> config, Action<T> success, Action<Exception> fail);
-        void Stop<T>();
+        IDisposable Receive<T>(ISubscriptionConfiguration<T> config, IObserver<T> observer);
     }
 }

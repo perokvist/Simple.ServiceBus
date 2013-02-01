@@ -17,8 +17,10 @@ namespace Simple.ServiceBus
         private static readonly MessagingFactory MessagingFactory = MessagingFactory.Create();
         private static readonly NamespaceManager NamespaceManager = NamespaceManager.Create();
         private static readonly TopicRepository TopicRepository = new TopicRepository(NamespaceManager);
+        private static readonly SubscriptionConfigurationRepository SubscriptionConfigurationRepository =  new SubscriptionConfigurationRepository();
+
         internal static readonly ObservableSubscriptionManagerFactory ObservableSubscriptionManagerFactory = new ObservableSubscriptionManagerFactory(
-                    new MessageReceiver(new SubscriptionClientFactory(MessagingFactory, new SubscriptionRepository(NamespaceManager, TopicRepository))),
+                    new MessageReceiver(new SubscriptionClientFactory(MessagingFactory, new SubscriptionRepository(NamespaceManager, TopicRepository)), SubscriptionConfigurationRepository),
                     new SubscriptionConfigurationRepository()
                 );
 

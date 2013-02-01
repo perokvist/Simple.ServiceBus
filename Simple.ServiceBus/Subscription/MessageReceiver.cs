@@ -3,28 +3,36 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.ServiceBus.Messaging;
+using Simple.ServiceBus.Extensions;
 
 namespace Simple.ServiceBus.Subscription
 {
     public class MessageReceiver : IMessageReceiver
     {
         private readonly ISubscriptionClientFactory _subscriptionClientFactory;
-        private readonly IDictionary<Type, SubscriptionClient> _clients;
+        private readonly ISubscriptionConfigurationRepository _configurationRepository;
 
-        public MessageReceiver(ISubscriptionClientFactory subscriptionClientFactory)
+        public MessageReceiver(ISubscriptionClientFactory subscriptionClientFactory, ISubscriptionConfigurationRepository configurationRepository)
         {
             _subscriptionClientFactory = subscriptionClientFactory;
-            _clients = new ConcurrentDictionary<Type, SubscriptionClient>();
+            _configurationRepository = configurationRepository;
         }
 
-        public async void Receive<T>(ISubscriptionConfiguration<T> config, Action<T> action, Action<Exception> fail)
+        public IDisposable Receive<T>(ISubscriptionConfiguration<T> config, IObserver<T> observer)
         {
-            var subscriptionClient = GetClient(config);
-            var task = Task.Factory.FromAsync<BrokeredMessage>(subscriptionClient.BeginReceive, subscriptionClient.EndReceive, action);
+            var client = _subscriptionClientFactory.CreateFor(_configurationRepository.Get<T>());
+            Receive<T>(client, observer.OnNext, observer.OnError);
+
+            return new DisposableAction(() => Stop<T>(client));
+        }
+
+        private async static void Receive<T>(SubscriptionClient client, Action<T> action, Action<Exception> fail)
+        {
+            var task = Task.Factory.FromAsync<BrokeredMessage>(client.BeginReceive, client.EndReceive, action);
             var bm = await task;
             try
             {
-                HandleMessage(bm, subscriptionClient.Mode, action);
+                HandleMessage(bm, client.Mode, action);
             }
             catch (Exception e)
             {
@@ -32,22 +40,17 @@ namespace Simple.ServiceBus.Subscription
             }
             finally
             {
-                if (!subscriptionClient.IsClosed)
-                    Receive(config, action, fail);
+                if (!client.IsClosed)
+                    Receive(client, action, fail);
             }
         }
 
-        public void Stop<T>()
+        private static Task Stop<T>(SubscriptionClient client)
         {
-            _clients[typeof(T)].Close();
+            return Task.Factory.FromAsync(client.BeginClose, client.EndClose, null);
         }
-
-        private SubscriptionClient GetClient<T>(ISubscriptionConfiguration<T> config)
-        {
-            return _clients.PutIf(() => _subscriptionClientFactory.CreateFor(config));
-        }
-
-        private void HandleMessage<T>(BrokeredMessage message, ReceiveMode mode, Action<T> action)
+        
+        private static void HandleMessage<T>(BrokeredMessage message, ReceiveMode mode, Action<T> action)
         {
             if (message == null) return;
             var messageData = message.GetBody<T>();
@@ -55,5 +58,6 @@ namespace Simple.ServiceBus.Subscription
             if (mode == ReceiveMode.PeekLock)
                 message.Complete();
         }
+
     }
 }

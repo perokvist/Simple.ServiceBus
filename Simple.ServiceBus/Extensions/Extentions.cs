@@ -1,12 +1,8 @@
-﻿using Simple.ServiceBus.Infrastructure;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Simple.ServiceBus.Infrastructure;
 
-namespace Simple.ServiceBus
+namespace Simple.ServiceBus.Extensions
 {
     public static class Extentions
     {
