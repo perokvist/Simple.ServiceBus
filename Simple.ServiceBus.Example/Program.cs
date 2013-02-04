@@ -20,18 +20,16 @@ namespace Simple.ServiceBus.Example
 
         private static void Setup(ServiceConfigurator<SubscriptionConfigurationService> obj)
         {
-            var cb = new ContainerBuilder();
-            cb.RegisterServiceBus().RegisterHandlers(typeof(Program).Assembly);
+            var cb = new ContainerBuilder()
+            .RegisterServiceBus()
+            .RegisterHandlers(typeof(Program).Assembly);
             var container = cb.Build();
             var resolver = new Resolver(container.ResolveNamed, container.Resolve);
-
-
 
             obj.ConstructUsing(
                 s =>
                 new SubscriptionConfigurationService(resolver,
-                 map => map.ListenTo<SimpleMessage>().UsingNamed("key").WithConfiguration(new SubscriptionConfiguration("1")),
-                 map => map.ListenTo<SimpleMessage>().UsingNamed("key").WithConfiguration(new SubscriptionConfiguration("2"))
+                 map => map.ListenTo<SimpleMessage>().Using<SimpleHandler>().WithConfiguration(new SubscriptionConfiguration("Test_1"))
                     ));
             obj.WhenStarted(sv => sv.Start());
             obj.WhenStopped(sv => sv.Stop());

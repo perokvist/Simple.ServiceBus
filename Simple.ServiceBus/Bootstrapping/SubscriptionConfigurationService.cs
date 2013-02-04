@@ -24,7 +24,7 @@ namespace Simple.ServiceBus.Bootstrapping
 
         private IEnumerable<IDisposable> StartHandlers()
         {
-            return _mapActions.Select(a => a(_map));
+            return _mapActions.Select(a => a(_map)).ToList();
         }
 
         public bool Stop()

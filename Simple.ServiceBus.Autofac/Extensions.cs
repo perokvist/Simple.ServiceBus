@@ -18,6 +18,7 @@ namespace Simple.ServiceBus.Autofac
             builder.Builder.RegisterAssemblyTypes(assembly)
                 .Where(t => t.GetInterfaces().Where(i => i.IsGenericType)
                 .Any(contract => contract.GetGenericTypeDefinition() == typeof(IObserver<>)))
+                .AsSelf()
                 .AsImplementedInterfaces();
             return builder.Builder;
         }
