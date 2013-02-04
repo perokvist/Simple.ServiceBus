@@ -32,6 +32,7 @@ namespace Simple.ServiceBus.Subscription
                 throw new DuplicateNameException(subscriptionKey);
 
             _observers[subscriptionKey] = observer;
+            _config.SubscriptionName = subscriptionKey;
 
             var stop = _messageReceiver.Receive(_config, observer);
 

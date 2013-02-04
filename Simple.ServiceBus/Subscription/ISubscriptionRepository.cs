@@ -4,6 +4,6 @@ namespace Simple.ServiceBus.Subscription
 {
     public interface ISubscriptionRepository
     {
-        SubscriptionDescription Get<T>();
+        SubscriptionDescription Get<T>(string subscriptionName);
     }
 }
