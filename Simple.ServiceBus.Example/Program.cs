@@ -50,7 +50,7 @@ namespace Simple.ServiceBus.Example
 
         public void OnNext(SimpleMessage value)
         {
-            Console.WriteLine("Title: {0}",value.Title);
+            Console.WriteLine("Title: {0}, Throughput:{1}", value.Title, value.DateTime - DateTime.Now);
         }
     }
 }

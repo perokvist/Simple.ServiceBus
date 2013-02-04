@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System.Linq;
+using Autofac;
 using Messages;
 using Microsoft.ServiceBus.Messaging;
 using Simple.ServiceBus;
@@ -21,16 +22,14 @@ namespace BusDemo
             Console.Write("Message: ");
             var message = Console.ReadLine();
 
-            while (!string.IsNullOrEmpty(message))
+            foreach (var i in Enumerable.Range(0,10000))
             {
                 serviceBus.Publish(new SimpleMessage
                 {
-                    Title = message,
-                    Id = Guid.NewGuid()
+                    Title = message+i,
+                    Id = Guid.NewGuid(),
+                    DateTime = DateTime.Now
                 });
-
-                Console.Write("Message:");
-                message = Console.ReadLine();
             }
         }
     }
