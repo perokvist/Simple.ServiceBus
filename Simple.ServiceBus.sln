@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple.ServiceBus.Autofac",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messages", "Messages\Messages.csproj", "{CD2A0C84-2775-4B8A-9080-CBF9CAF1FE84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusDemoClient", "BusDemoClient\BusDemoClient.csproj", "{03B6A641-29B3-43CB-8A46-EF7FF5D3F242}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{6DD1C6AD-00D8-41FD-941A-9985C48B548A}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
@@ -19,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{6DD1C6
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGet.Simple.ServiceBus", "NuGet.Simple.ServiceBus\NuGet.Simple.ServiceBus.csproj", "{0451BAEF-DF2E-4B98-8644-94EE9415E389}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple.ServiceBus.Example", "Simple.ServiceBus.Example\Simple.ServiceBus.Example.csproj", "{2697D62C-1518-4214-9013-E7E403666EA5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,14 +42,14 @@ Global
 		{CD2A0C84-2775-4B8A-9080-CBF9CAF1FE84}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CD2A0C84-2775-4B8A-9080-CBF9CAF1FE84}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CD2A0C84-2775-4B8A-9080-CBF9CAF1FE84}.Release|Any CPU.Build.0 = Release|Any CPU
-		{03B6A641-29B3-43CB-8A46-EF7FF5D3F242}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{03B6A641-29B3-43CB-8A46-EF7FF5D3F242}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{03B6A641-29B3-43CB-8A46-EF7FF5D3F242}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{03B6A641-29B3-43CB-8A46-EF7FF5D3F242}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2697D62C-1518-4214-9013-E7E403666EA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2697D62C-1518-4214-9013-E7E403666EA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2697D62C-1518-4214-9013-E7E403666EA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2697D62C-1518-4214-9013-E7E403666EA5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -14,8 +14,6 @@ namespace BusDemo
             var container = new ContainerBuilder()
                 .RegisterServiceBus()
                 .RegisterHandlers(System.Reflection.Assembly.GetExecutingAssembly())
-                .ListenFor<SimpleMessage>().Configure(c => c.ReceiveMode = ReceiveMode.ReceiveAndDelete)
-                .Subscribe<SimpleMessage>(x => Console.WriteLine("Received (delegate) '{0}' with message id of {1}", x.Title, x.Id))
                 .Build();
 
             var serviceBus = container.Resolve<IServiceBus>();

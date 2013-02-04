@@ -16,13 +16,13 @@ namespace Simple.ServiceBus.Subscription
             _observables = new Dictionary<Type, dynamic>();
         }
 
-        public IDisposable Subscribe<T>(IObserver<T> handler)
+        public IDisposable Subscribe<T>(IObserver<T> handler,SubscriptionConfiguration configuration)
         {
             var observable = GetObservable<T>();
-            return observable.Subscribe(handler);
+            return observable.Subscribe(handler,configuration);
         }
 
-        private IObservable<T> GetObservable<T>()
+        private INamedObservable<T> GetObservable<T>()
         {
             return _observables.PutIf(typeof(T), () => _observableSubscriptionManagerFactory.Create<T>());
         }

@@ -21,7 +21,7 @@ namespace Simple.ServiceBus.Subscription
 
         public IDisposable Subscribe(IObserver<T> observer)
         {
-            return Subscribe(observer, new SubscriptionConfiguration { SubscriptionName = Guid.NewGuid().ToString() });
+            return Subscribe(observer, new SubscriptionConfiguration (Guid.NewGuid().ToString()));
         }
 
         public IConfigurated Subscribe(IObserver<T> observer, SubscriptionConfiguration config)

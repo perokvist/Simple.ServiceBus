@@ -46,6 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bootstrapping\INeedConfig.cs" />
+    <Compile Include="Bootstrapping\INeedHandler.cs" />
+    <Compile Include="Bootstrapping\IResolver.cs" />
+    <Compile Include="Bootstrapping\Map.cs" />
+    <Compile Include="Bootstrapping\NeedConfig.cs" />
+    <Compile Include="Bootstrapping\SubscriptionConfigurationService.cs" />
     <Compile Include="Extensions\Extentions.cs" />
     <Compile Include="Extensions\IObserverExtensions.cs" />
     <Compile Include="Infrastructure\Handler.cs" />
