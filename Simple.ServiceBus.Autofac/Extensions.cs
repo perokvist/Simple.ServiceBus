@@ -31,10 +31,6 @@ namespace Simple.ServiceBus.Autofac
 
         public static ISimpleBusConfigurator RegisterConfiguration(this ISimpleBusConfigurator builder, Assembly assembly)
         {
-            builder.Builder.RegisterAssemblyTypes(assembly)
-                .Where(x => x.GetInterfaces().Contains(typeof(ISubscriptionConfiguration<>)))
-                .AsImplementedInterfaces();
-
             return new SimpleBusConfigurator(builder.Builder);
         }
 
@@ -57,7 +53,7 @@ namespace Simple.ServiceBus.Autofac
 
     public interface ISubscriptionConfigurator<T> : IBuilderAccessor
     {
-        ISimpleBusConfigurator Configure(Action<ISubscriptionConfiguration<T>> action);
+        ISimpleBusConfigurator Configure(Action<SubscriptionConfiguration> action);
         ISimpleBusConfigurator WithContainerConfig();
 
     }

@@ -10,18 +10,17 @@ namespace Simple.ServiceBus.Subscription
     public class MessageReceiver : IMessageReceiver
     {
         private readonly ISubscriptionClientFactory _subscriptionClientFactory;
-        private readonly ISubscriptionConfigurationRepository _configurationRepository;
+        
 
-        public MessageReceiver(ISubscriptionClientFactory subscriptionClientFactory, ISubscriptionConfigurationRepository configurationRepository)
+        public MessageReceiver(ISubscriptionClientFactory subscriptionClientFactory)
         {
             _subscriptionClientFactory = subscriptionClientFactory;
-            _configurationRepository = configurationRepository;
         }
 
-        public IDisposable Receive<T>(ISubscriptionConfiguration<T> config, IObserver<T> observer)
+        public IDisposable Receive<T>(SubscriptionConfiguration config, IObserver<T> observer)
         {
             //NOTE config is not used yet
-            var client = _subscriptionClientFactory.CreateFor(_configurationRepository.Get<T>());
+            var client = _subscriptionClientFactory.CreateFor<T>(config);
             Receive<T>(client, observer.OnNext, observer.OnError);
 
             return new DisposableAction(() => Stop<T>(client));

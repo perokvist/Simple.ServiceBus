@@ -2,7 +2,7 @@ using System;
 
 namespace Simple.ServiceBus.Subscription
 {
-    internal class DisposableAction : IDisposable
+    internal class DisposableAction : IConfigurated
     {
         private readonly Action _action;
 
@@ -16,6 +16,6 @@ namespace Simple.ServiceBus.Subscription
             _action();
         }
 
-        public string Id { get; set; }
+        public SubscriptionConfiguration Config { get; set; }
     }
 }

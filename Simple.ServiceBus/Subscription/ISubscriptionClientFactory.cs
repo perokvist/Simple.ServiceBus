@@ -4,6 +4,6 @@ namespace Simple.ServiceBus.Subscription
 {
     public interface ISubscriptionClientFactory
     {
-        SubscriptionClient CreateFor<T>(ISubscriptionConfiguration<T> config);
+        SubscriptionClient CreateFor<T>(SubscriptionConfiguration config);
     }
 }

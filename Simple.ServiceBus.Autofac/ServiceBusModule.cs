@@ -15,7 +15,6 @@ namespace Simple.ServiceBus.Autofac
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterAssemblyTypes(System.Reflection.Assembly.GetAssembly(typeof (IServiceBus)))
-                .Except<Subscription.SubscriptionConfigurationRepository>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
 
@@ -25,12 +24,7 @@ namespace Simple.ServiceBus.Autofac
             builder.Register(x => MessagingFactory.Create())
                 .AsSelf()
                 .SingleInstance();
-
-            builder.RegisterType<SubscriptionConfigurationRepository>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
-
-
+            
         }
     }
 }

@@ -3,18 +3,7 @@ using Microsoft.ServiceBus.Messaging;
 
 namespace Simple.ServiceBus.Subscription
 {
-    public interface ISubscriptionConfiguration<T> : ISubscriptionReceiveConfiguration<T>
-    {
-        string SubscriptionName { get; set; }
-    }
-
-    public interface ISubscriptionReceiveConfiguration<T>
-    {
-        TimeSpan TimeSpan { get; set; }
-        ReceiveMode ReceiveMode { get; set; }
-    }
-
-    public class SubscriptionConfiguration<T> : ISubscriptionConfiguration<T>
+    public class SubscriptionConfiguration
     {
         public ReceiveMode ReceiveMode { get; set; }
 

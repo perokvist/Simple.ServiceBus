@@ -14,7 +14,7 @@ namespace Simple.ServiceBus.Subscription
             _subscriptionRepository = subscriptionRepository;
         }
 
-        public SubscriptionClient CreateFor<T>(ISubscriptionConfiguration<T> config)
+        public SubscriptionClient CreateFor<T>(SubscriptionConfiguration config)
         {
             var subscription = _subscriptionRepository.Get<T>(config.SubscriptionName);
             var topicPath = subscription.TopicPath;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Linq;
 
@@ -10,34 +11,29 @@ namespace Simple.ServiceBus.Subscription
     {
         private readonly IMessageReceiver _messageReceiver;
         private readonly IDictionary<string, IObserver<T>> _observers;
-        private readonly ISubscriptionConfiguration<T> _config;
-
+        
         public ObservaleSubscriptionManager(
-            IMessageReceiver messageReceiver,
-            ISubscriptionConfigurationRepository subscriptionConfigurationRepository)
+            IMessageReceiver messageReceiver)
         {
             _messageReceiver = messageReceiver;
             _observers = new ConcurrentDictionary<string, IObserver<T>>();
-            _config = subscriptionConfigurationRepository.Get<T>();
         }
 
         public IDisposable Subscribe(IObserver<T> observer)
         {
-            return Subscribe(observer, Guid.NewGuid().ToString());
+            return Subscribe(observer, new SubscriptionConfiguration { SubscriptionName = Guid.NewGuid().ToString() });
         }
-        public IDisposable Subscribe(IObserver<T> observer, string subscriptionKey)
+
+        public IConfigurated Subscribe(IObserver<T> observer, SubscriptionConfiguration config)
         {
             //TODO: needs to be unique for multiple application use
-            if (_observers.ContainsKey(subscriptionKey))
-                throw new DuplicateNameException(subscriptionKey);
+            if (_observers.ContainsKey(config.SubscriptionName))
+                throw new DuplicateNameException(config.SubscriptionName);
+            _observers[config.SubscriptionName] = observer;
+            
+            var stop = _messageReceiver.Receive(config, observer);
 
-            _observers[subscriptionKey] = observer;
-            _config.SubscriptionName = subscriptionKey;
-
-            var stop = _messageReceiver.Receive(_config, observer);
-
-
-            return new DisposableAction(() => Unhsubscribe(subscriptionKey, stop)) { Id = subscriptionKey };
+            return new DisposableAction(() => Unhsubscribe(config.SubscriptionName, stop)) { Config=config };
         }
 
         private void Unhsubscribe(string subscriptionKey, IDisposable stoppable)
@@ -54,6 +50,6 @@ namespace Simple.ServiceBus.Subscription
 
     public interface INamedObservable<out T> : IObservable<T>
     {
-        IDisposable Subscribe(IObserver<T> observer, string name);
+        IConfigurated Subscribe(IObserver<T> observer, SubscriptionConfiguration config);
     }
 }

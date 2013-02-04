@@ -60,10 +60,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceBusFactory.cs" />
     <Compile Include="Subscription\DisposableAction.cs" />
+    <Compile Include="Subscription\IConfigurated.cs" />
     <Compile Include="Subscription\IMessageReceiver.cs" />
     <Compile Include="Subscription\IObservableSubscriptionManagerFactory.cs" />
     <Compile Include="Subscription\ISubscriptionClientFactory.cs" />
-    <Compile Include="Subscription\ISubscriptionConfigurationRepository.cs" />
     <Compile Include="Subscription\ISubscriptionManager.cs" />
     <Compile Include="Subscription\ISubscriptionRepository.cs" />
     <Compile Include="Subscription\MessageReceiver.cs" />
@@ -71,7 +71,6 @@
     <Compile Include="Subscription\ObservaleSubscriptionManager.cs" />
     <Compile Include="Subscription\SubscriptionClientFactory.cs" />
     <Compile Include="Subscription\SubscriptionConfiguration.cs" />
-    <Compile Include="Subscription\SubscriptionConfigurationRepository.cs" />
     <Compile Include="Subscription\SubscriptionManager.cs" />
     <Compile Include="Subscription\SubscriptionRepository.cs" />
   </ItemGroup>

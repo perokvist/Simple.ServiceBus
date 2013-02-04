@@ -5,20 +5,17 @@ namespace Simple.ServiceBus.Subscription
     public class ObservableSubscriptionManagerFactory : IObservableSubscriptionManagerFactory
     {
         private readonly IMessageReceiver _messageReceiver;
-        private readonly ISubscriptionConfigurationRepository _configurationRepository;
+        
 
-        public ObservableSubscriptionManagerFactory(
-            IMessageReceiver messageReceiver,
-            ISubscriptionConfigurationRepository configurationRepository
-            )
+        public ObservableSubscriptionManagerFactory(IMessageReceiver messageReceiver)
         {
             _messageReceiver = messageReceiver;
-            _configurationRepository = configurationRepository;
+            
         }
 
         public INamedObservable<T> Create<T>()
-        {
-            return new ObservaleSubscriptionManager<T>(_messageReceiver, _configurationRepository);
-        }
+    {
+        return new ObservaleSubscriptionManager<T>(_messageReceiver);
+    }
     }
 }

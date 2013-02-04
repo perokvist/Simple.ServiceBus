@@ -14,9 +14,9 @@ namespace Simple.ServiceBus.Autofac
             _configurator = configurator;
         }
 
-        public ISimpleBusConfigurator Configure(Action<ISubscriptionConfiguration<T>> action)
+        public ISimpleBusConfigurator Configure(Action<SubscriptionConfiguration> action)
         {
-            var config = new SubscriptionConfiguration<T>();
+            var config = new SubscriptionConfiguration();
             action(config);
             Builder.RegisterInstance(config)
                 .AsImplementedInterfaces()

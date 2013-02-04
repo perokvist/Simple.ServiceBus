@@ -3,17 +3,13 @@ using Messages;
 using Microsoft.ServiceBus.Messaging;
 using Simple.ServiceBus;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Simple.ServiceBus.Autofac;
 
 namespace BusDemo
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             var container = new ContainerBuilder()
                 .RegisterServiceBus()
