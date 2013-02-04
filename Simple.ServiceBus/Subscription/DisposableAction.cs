@@ -15,5 +15,7 @@ namespace Simple.ServiceBus.Subscription
         {
             _action();
         }
+
+        public string Id { get; set; }
     }
 }

@@ -36,7 +36,7 @@ namespace Simple.ServiceBus.Subscription
             var stop = _messageReceiver.Receive(_config, observer);
 
 
-            return new DisposableAction(() => Unhsubscribe(subscriptionKey, stop));
+            return new DisposableAction(() => Unhsubscribe(subscriptionKey, stop)) { Id = subscriptionKey };
         }
 
         private void Unhsubscribe(string subscriptionKey, IDisposable stoppable)
