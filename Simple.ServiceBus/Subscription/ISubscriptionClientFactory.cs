@@ -1,9 +1,10 @@
+using System.Threading.Tasks;
 using Microsoft.ServiceBus.Messaging;
 
 namespace Simple.ServiceBus.Subscription
 {
     public interface ISubscriptionClientFactory
     {
-        SubscriptionClient CreateFor<T>(SubscriptionConfiguration config);
+        Task<SubscriptionClient> CreateFor<T>(SubscriptionConfiguration config);
     }
 }

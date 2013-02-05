@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
 using Simple.ServiceBus.Publishing;
@@ -16,19 +17,28 @@ namespace Simple.ServiceBus.Subscription
             _topicRepository = topicRepository;
         }
 
-        public SubscriptionDescription Get<T>(string subscriptionName)
+        public async Task<SubscriptionDescription> Get<T>(string subscriptionName)
         {
-            var topic = _topicRepository.Get<T>();
+            var topic = await _topicRepository.Get<T>();
 
             SubscriptionDescription subscription;
 
-            //TODO make async
-            if (!_namespaceManager.SubscriptionExists(topic.Path, subscriptionName))
-                subscription = _namespaceManager.CreateSubscription(topic.Path, subscriptionName);
-            else
-                subscription = _namespaceManager.GetSubscription(topic.Path, subscriptionName);
+            var exsitsTask = Task.Factory.FromAsync<string, string, bool>(
+                    _namespaceManager.BeginSubscriptionExists, _namespaceManager.EndSubscriptionExists, topic.Path, subscriptionName, null);
 
-            return subscription;
+            var createTask = Task.Factory.FromAsync<string, string, SubscriptionDescription>(
+                    _namespaceManager.BeginCreateSubscription, _namespaceManager.EndCreateSubscription, topic.Path, subscriptionName, null);
+
+            var getTask = Task.Factory.FromAsync<string, string, SubscriptionDescription>(
+                    _namespaceManager.BeginGetSubscription, _namespaceManager.EndGetSubscription, topic.Path, subscriptionName, null);
+
+            if(await exsitsTask)
+            {
+                return await createTask;
+            }else
+            {
+                return await getTask;
+            }
         }
     }
 }

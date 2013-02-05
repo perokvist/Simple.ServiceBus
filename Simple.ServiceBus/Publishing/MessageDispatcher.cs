@@ -16,7 +16,7 @@ namespace Simple.ServiceBus.Publishing
 
         public async Task Publish<T>(T message)
         {
-            var topicClient = _topicClientFactory.CreateFor<T>();
+            var topicClient = await _topicClientFactory.CreateFor<T>();
             try
             {
                 var task = Task.Factory.FromAsync(topicClient.BeginSend, topicClient.EndSend, new BrokeredMessage(message), null);

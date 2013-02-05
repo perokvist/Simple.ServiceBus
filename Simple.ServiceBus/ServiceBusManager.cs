@@ -19,15 +19,15 @@ namespace Simple.ServiceBus
             _topicRepository = topicRepository;
         }
 
-        public void DeleteTopic<T>()
+        public async void DeleteTopic<T>()
         {
-            var topic = _topicRepository.Get<T>();
+            var topic = await _topicRepository.Get<T>();
             _namespaceManager.DeleteTopic(topic.Path);
         }
 
-        public void DeleteSubscription<T>(string subscriptionName)
+        public async void DeleteSubscription<T>(string subscriptionName)
         {
-            var topic = _topicRepository.Get<T>();
+            var topic = await _topicRepository.Get<T>();
             _namespaceManager.DeleteSubscription(topic.Path, subscriptionName);
         }
     }

@@ -1,9 +1,10 @@
+using System.Threading.Tasks;
 using Microsoft.ServiceBus.Messaging;
 
 namespace Simple.ServiceBus.Publishing
 {
     public interface ITopicClientFactory
     {
-        TopicClient CreateFor<T>();
+        Task<TopicClient> CreateFor<T>();
     }
 }

@@ -70,6 +70,7 @@
     <Compile Include="Subscription\DisposableAction.cs" />
     <Compile Include="Subscription\IConfigurated.cs" />
     <Compile Include="Subscription\IMessageReceiver.cs" />
+    <Compile Include="Subscription\INamedObservable.cs" />
     <Compile Include="Subscription\IObservableSubscriptionManagerFactory.cs" />
     <Compile Include="Subscription\ISubscriptionClientFactory.cs" />
     <Compile Include="Subscription\ISubscriptionManager.cs" />

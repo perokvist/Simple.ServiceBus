@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Simple.ServiceBus.Subscription
 {
@@ -21,7 +22,7 @@ namespace Simple.ServiceBus.Subscription
 
         public IDisposable Subscribe(IObserver<T> observer)
         {
-            return Subscribe(observer, new SubscriptionConfiguration (Guid.NewGuid().ToString()));
+            return Subscribe(observer, new SubscriptionConfiguration(Guid.NewGuid().ToString()));
         }
 
         public IConfigurated Subscribe(IObserver<T> observer, SubscriptionConfiguration config)
@@ -36,20 +37,15 @@ namespace Simple.ServiceBus.Subscription
             return new DisposableAction(() => Unhsubscribe(config.SubscriptionName, stop)) { Config=config };
         }
 
-        private void Unhsubscribe(string subscriptionKey, IDisposable stoppable)
+        private async void Unhsubscribe(string subscriptionKey, Task<IDisposable> stoppable)
         {
             var o = _observers[subscriptionKey];
             _observers.Remove(subscriptionKey);
             o.OnCompleted();
             if (!_observers.Any())
             {
-                stoppable.Dispose();
+                (await stoppable).Dispose();
             }
         }
-    }
-
-    public interface INamedObservable<out T> : IObservable<T>
-    {
-        IConfigurated Subscribe(IObserver<T> observer, SubscriptionConfiguration config);
     }
 }

@@ -17,9 +17,9 @@ namespace Simple.ServiceBus.Subscription
             _subscriptionClientFactory = subscriptionClientFactory;
         }
 
-        public IDisposable Receive<T>(SubscriptionConfiguration config, IObserver<T> observer)
+        public async Task<IDisposable> Receive<T>(SubscriptionConfiguration config, IObserver<T> observer)
         {
-            var client = _subscriptionClientFactory.CreateFor<T>(config);
+            var client = await _subscriptionClientFactory.CreateFor<T>(config);
             config.ConfigAction(client);
             Receive<T>(client, observer.OnNext, observer.OnError);
 
