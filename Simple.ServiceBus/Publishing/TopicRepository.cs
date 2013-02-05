@@ -16,7 +16,7 @@ namespace Simple.ServiceBus.Publishing
         public TopicDescription Get<T>()
         {
             var topicName = string.Format("Topic_{0}", typeof(T).Name);
-            
+            //TODO make async
             if (!_namespaceManager.TopicExists(topicName))
                 _namespaceManager.CreateTopic(topicName);
 

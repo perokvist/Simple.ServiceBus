@@ -22,6 +22,7 @@ namespace Simple.ServiceBus.Subscription
 
             SubscriptionDescription subscription;
 
+            //TODO make async
             if (!_namespaceManager.SubscriptionExists(topic.Path, subscriptionName))
                 subscription = _namespaceManager.CreateSubscription(topic.Path, subscriptionName);
             else

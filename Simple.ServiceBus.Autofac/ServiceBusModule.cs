@@ -17,7 +17,7 @@ namespace Simple.ServiceBus.Autofac
             builder.RegisterAssemblyTypes(System.Reflection.Assembly.GetAssembly(typeof(IServiceBus)))
                 .AsImplementedInterfaces()
                 .SingleInstance();
-
+            
             builder.Register(x => NamespaceManager.Create())
                 .AsSelf()
                 .SingleInstance();
