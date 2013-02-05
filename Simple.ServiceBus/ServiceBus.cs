@@ -29,9 +29,9 @@ namespace Simple.ServiceBus
             return _subscriptionManager.Subscribe(handler, configuration);
         }
 
-        void IServiceBus.Publish<T>(T message)
+        Task IServiceBus.Publish<T>(T message)
         {
-            _messageDispatcher.Publish(message);
+            return _messageDispatcher.Publish(message);
         }
     }
 }

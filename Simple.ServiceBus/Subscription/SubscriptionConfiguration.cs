@@ -8,6 +8,7 @@ namespace Simple.ServiceBus.Subscription
         public SubscriptionConfiguration(string name)
         {
             SubscriptionName = name;
+            ConfigAction = c => { };
         }
 
         public ReceiveMode ReceiveMode { get; set; }
@@ -15,5 +16,11 @@ namespace Simple.ServiceBus.Subscription
         public TimeSpan TimeSpan { get; set; }
 
         public string SubscriptionName { get; private set; }
+
+        /// <summary>
+        /// Configure the client
+        /// </summary>
+        /// <remarks>Temporary full access to the client</remarks>
+        public Action<SubscriptionClient> ConfigAction { get; set; }
     }
 }

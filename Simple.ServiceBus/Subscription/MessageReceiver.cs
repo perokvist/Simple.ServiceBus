@@ -19,8 +19,8 @@ namespace Simple.ServiceBus.Subscription
 
         public IDisposable Receive<T>(SubscriptionConfiguration config, IObserver<T> observer)
         {
-            //NOTE config is not used yet
             var client = _subscriptionClientFactory.CreateFor<T>(config);
+            config.ConfigAction(client);
             Receive<T>(client, observer.OnNext, observer.OnError);
 
             return new DisposableAction(() => Stop<T>(client));

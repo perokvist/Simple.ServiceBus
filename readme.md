@@ -39,6 +39,8 @@ var container = new ContainerBuilder()
 * Deadletter/fault handling
 * Transient support
 
+http://msdn.microsoft.com/en-us/library/windowsazure/hh528527.aspx
+
 ### Downloads
 
 Download from NuGet 'Simple.ServiceBus' [Search NuGet for Simple.ServiceBus](http://nuget.org/packages?q=simple.servicebus&prerelease=true&sortOrder=relevance)

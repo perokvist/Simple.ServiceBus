@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using Autofac;
 using Messages;
 using Microsoft.ServiceBus.Messaging;
@@ -22,15 +23,15 @@ namespace BusDemo
             Console.Write("Message: ");
             var message = Console.ReadLine();
 
-            foreach (var i in Enumerable.Range(0,10000))
-            {
-                serviceBus.Publish(new SimpleMessage
-                {
-                    Title = message+i,
-                    Id = Guid.NewGuid(),
-                    DateTime = DateTime.Now
-                });
-            }
+
+            Enumerable.Range(0, 10000).AsParallel().ForAll(
+                i => serviceBus.Publish(new SimpleMessage
+                                            {
+                                                Title = message + i,
+                                                Id = Guid.NewGuid(),
+                                                DateTime = DateTime.Now
+                                            }));
+
         }
     }
 }
