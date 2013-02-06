@@ -28,10 +28,10 @@ namespace Simple.ServiceBus.Subscription
 
             if(await exsitsTask)
             {
-                return await createTask;
+                return await getTask; 
             }
 
-            return await getTask;
+            return await createTask;
         }
     }
 }
