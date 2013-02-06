@@ -22,11 +22,11 @@ namespace Simple.ServiceBus.Subscription
         {
             var topic = await _topicRepository.Get<T>();
 
-            var exsitsTask = _namespaceManager.SubscriptionExistsAsync(topic.Path, subscriptionName, null);
+            var existsTask = _namespaceManager.SubscriptionExistsAsync(topic.Path, subscriptionName, null);
             var createTask = _namespaceManager.CreateSubscriptionAsync(topic.Path, subscriptionName, null);
             var getTask = _namespaceManager.GetSubscriptionAsync(topic.Path, subscriptionName, null);
 
-            if(await exsitsTask)
+            if(await existsTask)
             {
                 return await getTask; 
             }

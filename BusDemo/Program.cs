@@ -12,12 +12,12 @@ namespace BusDemo
 {
     class Program
     {
-        static ManualResetEvent resetEvent = new ManualResetEvent(false);
+        static readonly ManualResetEvent ResetEvent = new ManualResetEvent(false);
 
         static void Main()
         {
             Run();
-            resetEvent.WaitOne(); 
+            ResetEvent.WaitOne();
         }
 
         private static async void Run()
@@ -30,29 +30,31 @@ namespace BusDemo
             var serviceBus = container.Resolve<IServiceBus>();
             var manager = container.Resolve<IServiceBusManager>();
 
-            Console.WriteLine("Resetting bus...");
-            //await manager.DeleteTopicAsync<SimpleMessage>();
-            
-            Console.Write("");
+            Console.WriteLine("Resetting demo topic...");
+            await manager.DeleteTopicAsync<SimpleMessage>();
             Console.Write("Message: ");
             var message = Console.ReadLine();
-            Send(serviceBus, message);
-        }
-
-        private static void Send(IServiceBus serviceBus, string message)
-        {
-            var tasks = Enumerable.Range(0, 1).Select(i => serviceBus.Publish(new SimpleMessage
-                                                                                  {
-                                                                                      Title = message + i,
-                                                                                      Id = Guid.NewGuid(),
-                                                                                      DateTime = DateTime.Now
-                                                                                  })).ToArray();
-
-
-            Task.WaitAll(tasks);
+            Console.Write("Sending messages...");
+            await Send(serviceBus, message);
             Console.WriteLine("Done. Press any key to exit.");
             Console.ReadLine();
-            resetEvent.Set();
+            ResetEvent.Set();
+        }
+
+        private static Task Send(IServiceBus serviceBus, string message)
+        {
+            var tasks = Enumerable.Range(0, 25)
+                .Select(i => serviceBus.Publish(
+                    new SimpleMessage
+                    {
+                        Title = message + i,
+                        Id = Guid.NewGuid(),
+                        DateTime = DateTime.Now
+                    }))
+                 .ToArray();
+
+            return Task.WhenAll(tasks);
+           
         }
     }
 }
