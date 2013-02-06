@@ -54,6 +54,7 @@
     <Compile Include="Bootstrapping\SubscriptionConfigurationService.cs" />
     <Compile Include="Extensions\Extentions.cs" />
     <Compile Include="Extensions\IObserverExtensions.cs" />
+    <Compile Include="Extensions\NamespaceManagerExtensions.cs" />
     <Compile Include="Infrastructure\Handler.cs" />
     <Compile Include="IServiceBusManager.cs" />
     <Compile Include="Publishing\IMessageDispatcher.cs" />

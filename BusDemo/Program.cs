@@ -19,18 +19,27 @@ namespace BusDemo
                 .Build();
 
             var serviceBus = container.Resolve<IServiceBus>();
+            var manager = container.Resolve<IServiceBusManager>();
+
+            Console.Write("Resetting bus...");
+
+            manager.DeleteTopic<SimpleMessage>();
+            
+            //manager.DeleteSubscription<SimpleMessage>("Test_1");
 
             Console.Write("Message: ");
             var message = Console.ReadLine();
 
-
-            Enumerable.Range(0, 10000).AsParallel().ForAll(
-                i => serviceBus.Publish(new SimpleMessage
+            var tasks = Enumerable.Range(0, 1).Select(i => serviceBus.Publish(new SimpleMessage
                                             {
                                                 Title = message + i,
                                                 Id = Guid.NewGuid(),
                                                 DateTime = DateTime.Now
-                                            }));
+                                            })).ToArray();
+
+            Task.WaitAll(tasks);
+            Console.Write("Done. Press any key to exit.");
+            Console.ReadLine();
 
         }
     }

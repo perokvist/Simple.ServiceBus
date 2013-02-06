@@ -15,10 +15,12 @@ namespace Simple.ServiceBus.Publishing
             _topicRepository = topicRepository;
         }
 
-        public Task<TopicClient> CreateFor<T>()
+        public async Task<TopicClient> CreateFor<T>()
         {
-            return _topicRepository.Get<T>()
-                .ContinueWith(x => _messagingFactory.CreateTopicClient(x.Result.Path));
+            var topic = await _topicRepository.Get<T>();
+                return _messagingFactory.CreateTopicClient(topic.Path);
+
+                //.ContinueWith(x => _messagingFactory.CreateTopicClient(x.Result.Path));
         }
 
     }
