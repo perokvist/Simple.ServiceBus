@@ -1,4 +1,5 @@
 ﻿using Microsoft.ServiceBus;
+using Simple.ServiceBus.Extensions;
 using Simple.ServiceBus.Publishing;
 using System;
 using System.Collections.Generic;
@@ -19,16 +20,16 @@ namespace Simple.ServiceBus
             _topicRepository = topicRepository;
         }
 
-        public async void DeleteTopic<T>()
+        public async Task DeleteTopicAsync<T>()
         {
             var topic = await _topicRepository.Get<T>();
-            _namespaceManager.DeleteTopic(topic.Path);
+            await _namespaceManager.DeleteTopicAsync(topic.Path, null);
         }
 
-        public async void DeleteSubscription<T>(string subscriptionName)
+        public async Task DeleteSubscriptionAsync<T>(string subscriptionName)
         {
             var topic = await _topicRepository.Get<T>();
-            _namespaceManager.DeleteSubscription(topic.Path, subscriptionName);
+            await _namespaceManager.DeleteSubscriptionAsync(topic.Path, subscriptionName, null);
         }
     }
 }

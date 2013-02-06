@@ -1,8 +1,10 @@
+using System.Threading.Tasks;
+
 namespace Simple.ServiceBus
 {
     public interface IServiceBusManager
     {
-        void DeleteTopic<T>();
-        void DeleteSubscription<T>(string subscriptionName);
+        Task DeleteTopicAsync<T>();
+        Task DeleteSubscriptionAsync<T>(string subscriptionName);
     }
 }

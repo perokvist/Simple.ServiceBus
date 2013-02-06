@@ -32,24 +32,34 @@ namespace Simple.ServiceBus.Extensions
         public static Task<bool> SubscriptionExistsAsync(this NamespaceManager nm, string topicPath, string subscriptionName, object state)
         {
             return Task.Factory.FromAsync<string, string, bool>(
-                    nm.BeginSubscriptionExists, nm.EndSubscriptionExists, topicPath, subscriptionName, null);
+                    nm.BeginSubscriptionExists, nm.EndSubscriptionExists, topicPath, subscriptionName, state);
         }
 
 
         public static Task<SubscriptionDescription> CreateSubscriptionAsync(this NamespaceManager nm, string topicPath, string subscriptionName, object state)
         {
             return Task.Factory.FromAsync<string, string, SubscriptionDescription>(
-                    nm.BeginCreateSubscription, nm.EndCreateSubscription, topicPath, subscriptionName, null);
+                    nm.BeginCreateSubscription, nm.EndCreateSubscription, topicPath, subscriptionName, state);
 
         }
 
         public static Task<SubscriptionDescription> GetSubscriptionAsync(this NamespaceManager nm, string topicPath, string subscriptionName, object state)
         {
             return Task.Factory.FromAsync<string, string, SubscriptionDescription>(
-                    nm.BeginGetSubscription, nm.EndGetSubscription, topicPath, subscriptionName, null);
+                    nm.BeginGetSubscription, nm.EndGetSubscription, topicPath, subscriptionName, state);
         }
 
+        public static Task DeleteSubscriptionAsync(this NamespaceManager nm, string topicPath, string subscriptionName, object state)
+        {
+            return Task.Factory.FromAsync<string, string>(
+                    nm.BeginDeleteSubscription, nm.EndDeleteSubscription, topicPath, subscriptionName, state);
+        }
 
+        public static Task DeleteTopicAsync(this NamespaceManager nm, string topicPath, object state)
+        {
+            return Task.Factory.FromAsync<string>(
+                    nm.BeginDeleteTopic, nm.EndDeleteTopic, topicPath, state);
+        }
 
     }
 }
