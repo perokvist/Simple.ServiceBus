@@ -22,7 +22,7 @@ namespace Simple.ServiceBus.Example
         {
             var cb = new ContainerBuilder()
             .RegisterServiceBus()
-            .RegisterHandlers(typeof(Program).Assembly);
+            .RegisterObservers(typeof(Program).Assembly);
             var container = cb.Build();
             var resolver = new Resolver(container.ResolveNamed, container.Resolve);
 

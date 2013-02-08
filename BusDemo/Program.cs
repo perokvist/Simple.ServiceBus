@@ -24,7 +24,7 @@ namespace BusDemo
         {
             var container = new ContainerBuilder()
                 .RegisterServiceBus()
-                .RegisterHandlers(System.Reflection.Assembly.GetExecutingAssembly())
+                .RegisterObservers(System.Reflection.Assembly.GetExecutingAssembly())
                 .Build();
 
             var serviceBus = container.Resolve<IServiceBus>();

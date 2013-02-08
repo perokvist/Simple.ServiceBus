@@ -13,7 +13,7 @@ namespace Simple.ServiceBus.Autofac
             return new BuilderInitialized(builder);
         }
 
-        public static ContainerBuilder RegisterHandlers(this BuilderInitialized builder, Assembly assembly)
+        public static ContainerBuilder RegisterObservers(this BuilderInitialized builder, Assembly assembly)
         {
             builder.Builder.RegisterAssemblyTypes(assembly)
                 .Where(t => t.GetInterfaces().Where(i => i.IsGenericType)
