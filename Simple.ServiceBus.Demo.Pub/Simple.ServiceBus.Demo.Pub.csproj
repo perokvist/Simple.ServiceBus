@@ -4,16 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2697D62C-1518-4214-9013-E7E403666EA5}</ProjectGuid>
+    <ProjectGuid>{F5CDA2A9-8365-43A5-8C0E-CB226BE52344}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Simple.ServiceBus.Example</RootNamespace>
-    <AssemblyName>Simple.ServiceBus.Example</AssemblyName>
+    <RootNamespace>Simple.ServiceBus.Demo.Pub</RootNamespace>
+    <AssemblyName>Simple.ServiceBus.Demo.Pub</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -24,7 +23,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,7 +32,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac">
@@ -50,14 +47,14 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Topshelf">
-      <HintPath>..\packages\TopShelf.3.1.0\lib\net40-full\Topshelf.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimpleHandler.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -66,11 +63,11 @@
       <Name>Messages</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simple.ServiceBus.Autofac\Simple.ServiceBus.Autofac.csproj">
-      <Project>{98be60c9-1964-4d87-82cd-5eefbda5370a}</Project>
+      <Project>{98BE60C9-1964-4D87-82CD-5EEFBDA5370A}</Project>
       <Name>Simple.ServiceBus.Autofac</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simple.ServiceBus\Simple.ServiceBus.csproj">
-      <Project>{fc7187df-e3d5-4c8f-a7ac-1076ab56e8ec}</Project>
+      <Project>{FC7187DF-E3D5-4C8F-A7AC-1076AB56E8EC}</Project>
       <Name>Simple.ServiceBus</Name>
     </ProjectReference>
   </ItemGroup>

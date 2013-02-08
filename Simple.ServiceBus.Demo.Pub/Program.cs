@@ -1,14 +1,12 @@
-﻿using System.Linq;
+using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using Messages;
-using Microsoft.ServiceBus.Messaging;
-using Simple.ServiceBus;
-using System;
 using Simple.ServiceBus.Autofac;
 
-namespace BusDemo
+namespace Simple.ServiceBus.Demo.Pub
 {
     class Program
     {
@@ -44,7 +42,7 @@ namespace BusDemo
         private static Task Send(IServiceBus serviceBus, string message)
         {
             var tasks = Enumerable.Range(0, 25)
-                .Select(i => serviceBus.Publish(
+                .Select<int, Task>(i => serviceBus.Publish(
                     new SimpleMessage
                     {
                         Title = message + i,

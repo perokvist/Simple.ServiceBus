@@ -1,12 +1,7 @@
-﻿using Messages;
-using Simple.ServiceBus;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Messages;
 
-namespace BusDemo
+namespace Simple.ServiceBus.Demo.Pub
 {
     public class SimpleHandler : IObserver<SimpleMessage>
     {

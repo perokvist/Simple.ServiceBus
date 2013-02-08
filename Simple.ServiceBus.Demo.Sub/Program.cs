@@ -1,14 +1,13 @@
-﻿using System;
+using System;
 using Autofac;
 using Messages;
+using Simple.ServiceBus.Autofac;
 using Simple.ServiceBus.Bootstrapping;
 using Simple.ServiceBus.Subscription;
 using Topshelf;
-using Topshelf.Runtime;
 using Topshelf.ServiceConfigurators;
-using Simple.ServiceBus.Autofac;
 
-namespace Simple.ServiceBus.Example
+namespace Simple.ServiceBus.Demo.Sub
 {
     class Program
     {
@@ -18,21 +17,22 @@ namespace Simple.ServiceBus.Example
                 hc => hc.Service<SubscriptionConfigurationService>(Setup));
         }
 
-        private static void Setup(ServiceConfigurator<SubscriptionConfigurationService> obj)
+        private static void Setup(ServiceConfigurator<SubscriptionConfigurationService> serviceConfig)
         {
-            var cb = new ContainerBuilder()
+            var container = new ContainerBuilder()
             .RegisterServiceBus()
-            .RegisterObservers(typeof(Program).Assembly);
-            var container = cb.Build();
+            .RegisterObservers(typeof(Program).Assembly)
+            .Build();
+
             var resolver = new Resolver(container.ResolveNamed, container.Resolve);
 
-            obj.ConstructUsing(
+            serviceConfig.ConstructUsing(
                 s =>
                 new SubscriptionConfigurationService(resolver,
                  map => map.ListenTo<SimpleMessage>().Using<SimpleHandler>().WithConfiguration(new SubscriptionConfiguration("Test_1"))
                     ));
-            obj.WhenStarted(sv => sv.Start());
-            obj.WhenStopped(sv => sv.Stop());
+            serviceConfig.WhenStarted(sv => sv.Start());
+            serviceConfig.WhenStopped(sv => sv.Stop());
         }
     }
 
