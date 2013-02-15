@@ -1,7 +1,9 @@
+using System;
+
 namespace Simple.ServiceBus.Subscription
 {
     public interface ISubscriptionManager
     {
-        void Subscribe<T>(IHandle<T> handler);
+        IDisposable Subscribe<T>(IObserver<T> handler,SubscriptionConfiguration configuration);
     }
 }

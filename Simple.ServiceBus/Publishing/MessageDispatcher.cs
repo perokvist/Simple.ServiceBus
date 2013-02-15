@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.ServiceBus.Messaging;
 using Simple.ServiceBus.Infrastructure;
 
@@ -13,16 +14,13 @@ namespace Simple.ServiceBus.Publishing
             _topicClientFactory = topicClientFactory;
         }
 
-        public void Publish<T>(T message)
+        public async Task Publish<T>(T message)
         {
-            var topicClient = _topicClientFactory.CreateFor<T>();
+            var topicClient = await _topicClientFactory.CreateFor<T>();
             try
             {
-                topicClient.Send(new BrokeredMessage(message));
-            }
-            catch (Exception x)
-            {
-                throw x;
+                var task = Task.Factory.FromAsync(topicClient.BeginSend, topicClient.EndSend, new BrokeredMessage(message), null);
+                await task;
             }
             finally
             {

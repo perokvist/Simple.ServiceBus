@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D332A5F1-E48A-4944-BCF3-46038D68309B}</ProjectGuid>
+    <ProjectGuid>{F5CDA2A9-8365-43A5-8C0E-CB226BE52344}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BusDemo</RootNamespace>
-    <AssemblyName>BusDemo</AssemblyName>
+    <RootNamespace>Simple.ServiceBus.Demo.Pub</RootNamespace>
+    <AssemblyName>Simple.ServiceBus.Demo.Pub</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -43,6 +43,14 @@
     <Reference Include="Microsoft.ServiceBus, Version=1.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\ServiceBus.v1_0.1.0.1.0\lib\net40-full\Microsoft.ServiceBus.dll</HintPath>
     </Reference>
+    <Reference Include="Simple.ServiceBus, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Simple.ServiceBus.0.1.6\lib\net45\Simple.ServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="Simple.ServiceBus.Autofac, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Simple.ServiceBus.Autofac.0.1.6\lib\net45\Simple.ServiceBus.Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -56,7 +64,6 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SimpleHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -64,16 +71,8 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Messages\Messages.csproj">
-      <Project>{cd2a0c84-2775-4b8a-9080-cbf9caf1fe84}</Project>
+      <Project>{CD2A0C84-2775-4B8A-9080-CBF9CAF1FE84}</Project>
       <Name>Messages</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Simple.ServiceBus.Autofac\Simple.ServiceBus.Autofac.csproj">
-      <Project>{98be60c9-1964-4d87-82cd-5eefbda5370a}</Project>
-      <Name>Simple.ServiceBus.Autofac</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Simple.ServiceBus\Simple.ServiceBus.csproj">
-      <Project>{fc7187df-e3d5-4c8f-a7ac-1076ab56e8ec}</Project>
-      <Name>Simple.ServiceBus</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

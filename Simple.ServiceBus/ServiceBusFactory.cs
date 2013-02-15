@@ -1,11 +1,6 @@
 ﻿using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Simple.ServiceBus.Infrastructure;
 using Simple.ServiceBus.Publishing;
 using Simple.ServiceBus.Subscription;
 using MessageReceiver = Simple.ServiceBus.Subscription.MessageReceiver;
@@ -14,17 +9,32 @@ namespace Simple.ServiceBus
 {
     public class ServiceBusFactory
     {
-        public IServiceBus Create() {
-            var messagingFactory = MessagingFactory.Create(); 
-            var namespaceManager = NamespaceManager.Create();
-            var topicRepository = new TopicRepository(namespaceManager);
-            return new ServiceBus(new SubscriptionManager(
-                new SubscriptionClientFactory(messagingFactory,  
-                        new SubscriptionRepository(namespaceManager,
-                        topicRepository)), //TODO fix ugly dependencies 
-                    new MessageReceiver(), 
-                    new SubscriptionConfigurationRepository()),
-                new MessageDispatcher(new TopicClientFactory(messagingFactory, topicRepository)));
+        private static readonly MessagingFactory MessagingFactory = MessagingFactory.Create();
+        private static readonly NamespaceManager NamespaceManager = NamespaceManager.Create();
+        private static readonly TopicRepository TopicRepository = new TopicRepository(NamespaceManager);
+
+
+        internal static readonly ObservableSubscriptionManagerFactory ObservableSubscriptionManagerFactory = new ObservableSubscriptionManagerFactory(
+                    new MessageReceiver(new SubscriptionClientFactory(MessagingFactory, new SubscriptionRepository(NamespaceManager, TopicRepository)))
+                );
+
+        private static readonly IServiceBus ServiceBus = new ServiceBus(
+            new SubscriptionManager(ObservableSubscriptionManagerFactory),
+            new MessageDispatcher(new TopicClientFactory(MessagingFactory, TopicRepository)));
+
+        public IServiceBus Create()
+        {
+            return ServiceBus;
+        }
+    }
+
+    public static class ObservableFactory
+    {
+
+        public static IObservable<T> Create<T>()
+        {
+            return
+               ServiceBusFactory.ObservableSubscriptionManagerFactory.Create<T>();
         }
     }
 }

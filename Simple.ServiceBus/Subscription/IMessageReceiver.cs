@@ -1,10 +1,11 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.ServiceBus.Messaging;
 
 namespace Simple.ServiceBus.Subscription
 {
     public interface IMessageReceiver
     {
-        void Receive<T>(SubscriptionClient subscriptionClient, ISubscriptionReceiveConfiguration<T> config, Action<T> action);
+        Task<IDisposable> Receive<T>(SubscriptionConfiguration config, IObserver<T> observer);
     }
 }

@@ -22,15 +22,15 @@ namespace Simple.ServiceBus
             _messageDispatcher = messageDispatcher;
         }
 
-        void IServiceBus.Subscribe<T>(IHandle<T> handler)
+        IDisposable IServiceBus.Subscribe<T>(IObserver<T> handler, SubscriptionConfiguration configuration)
         {
-            //TODO clear topics, unsubscribe
-            _subscriptionManager.Subscribe(handler);
+            configuration = configuration ?? new SubscriptionConfiguration(Guid.NewGuid().ToString());
+            return _subscriptionManager.Subscribe(handler, configuration);
         }
 
-        void IServiceBus.Publish<T>(T message)
+        Task IServiceBus.PublishAsync<T>(T message)
         {
-            _messageDispatcher.Publish(message);
+            return _messageDispatcher.Publish(message);
         }
     }
 }

@@ -46,9 +46,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bootstrapping\INeedConfig.cs" />
+    <Compile Include="Bootstrapping\INeedHandler.cs" />
+    <Compile Include="Bootstrapping\IResolver.cs" />
+    <Compile Include="Bootstrapping\Map.cs" />
+    <Compile Include="Bootstrapping\NeedConfig.cs" />
+    <Compile Include="Bootstrapping\SubscriptionConfigurationService.cs" />
+    <Compile Include="Extensions\Extentions.cs" />
+    <Compile Include="Extensions\IObserverExtensions.cs" />
+    <Compile Include="Extensions\NamespaceManagerExtensions.cs" />
     <Compile Include="Infrastructure\Handler.cs" />
-    <Compile Include="Extentions.cs" />
-    <Compile Include="IHandler.cs" />
+    <Compile Include="IServiceBusManager.cs" />
     <Compile Include="Publishing\IMessageDispatcher.cs" />
     <Compile Include="Publishing\ITopicClientFactory.cs" />
     <Compile Include="Publishing\ITopicRepository.cs" />
@@ -59,15 +67,20 @@
     <Compile Include="IServiceBus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceBusFactory.cs" />
+    <Compile Include="ServiceBusManager.cs" />
+    <Compile Include="Subscription\DisposableAction.cs" />
+    <Compile Include="Subscription\IConfigurated.cs" />
     <Compile Include="Subscription\IMessageReceiver.cs" />
+    <Compile Include="Subscription\INamedObservable.cs" />
+    <Compile Include="Subscription\IObservableSubscriptionManagerFactory.cs" />
     <Compile Include="Subscription\ISubscriptionClientFactory.cs" />
-    <Compile Include="Subscription\ISubscriptionConfigurationRepository.cs" />
     <Compile Include="Subscription\ISubscriptionManager.cs" />
     <Compile Include="Subscription\ISubscriptionRepository.cs" />
     <Compile Include="Subscription\MessageReceiver.cs" />
+    <Compile Include="Subscription\ObservableSubscriptionManagerFactory.cs" />
+    <Compile Include="Subscription\ObservaleSubscriptionManager.cs" />
     <Compile Include="Subscription\SubscriptionClientFactory.cs" />
     <Compile Include="Subscription\SubscriptionConfiguration.cs" />
-    <Compile Include="Subscription\SubscriptionConfigurationRepository.cs" />
     <Compile Include="Subscription\SubscriptionManager.cs" />
     <Compile Include="Subscription\SubscriptionRepository.cs" />
   </ItemGroup>

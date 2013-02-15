@@ -1,6 +1,8 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
+using Simple.ServiceBus.Extensions;
 using Simple.ServiceBus.Publishing;
 
 namespace Simple.ServiceBus.Subscription
@@ -16,19 +18,20 @@ namespace Simple.ServiceBus.Subscription
             _topicRepository = topicRepository;
         }
 
-        public SubscriptionDescription Get<T>()
+        public async Task<SubscriptionDescription> Get<T>(string subscriptionName)
         {
-            var subscriptionName = string.Format("Subscription_{0}_{1}", typeof(T).Name, Guid.NewGuid()).Substring(0, 50); //TODO configure sufix
-            var topic = _topicRepository.Get<T>();
+            var topic = await _topicRepository.Get<T>();
 
-            SubscriptionDescription subscription;
+            var existsTask = _namespaceManager.SubscriptionExistsAsync(topic.Path, subscriptionName, null);
+            var createTask = _namespaceManager.CreateSubscriptionAsync(topic.Path, subscriptionName, null);
+            var getTask = _namespaceManager.GetSubscriptionAsync(topic.Path, subscriptionName, null);
 
-            if (!_namespaceManager.SubscriptionExists(topic.Path, subscriptionName))
-                subscription = _namespaceManager.CreateSubscription(topic.Path, subscriptionName);
-            else
-                subscription = _namespaceManager.GetSubscription(topic.Path, subscriptionName);
+            if(await existsTask)
+            {
+                return await getTask; 
+            }
 
-            return subscription;
+            return await createTask;
         }
     }
 }

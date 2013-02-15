@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.ServiceBus.Messaging;
 using Simple.ServiceBus.Infrastructure;
 
@@ -14,10 +15,12 @@ namespace Simple.ServiceBus.Publishing
             _topicRepository = topicRepository;
         }
 
-        public TopicClient CreateFor<T>()
+        public async Task<TopicClient> CreateFor<T>()
         {
-            var topic = _topicRepository.Get<T>();
-            return _messagingFactory.CreateTopicClient(topic.Path);
+            var topic = await _topicRepository.Get<T>();
+                return _messagingFactory.CreateTopicClient(topic.Path);
+
+                //.ContinueWith(x => _messagingFactory.CreateTopicClient(x.Result.Path));
         }
 
     }

@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
+
 namespace Simple.ServiceBus.Publishing
 {
     public interface IMessageDispatcher
     {
-        void Publish<T>(T message);
+        Task Publish<T>(T message);
     }
 }

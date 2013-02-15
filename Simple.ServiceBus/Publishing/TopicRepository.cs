@@ -1,5 +1,7 @@
+using System.Threading.Tasks;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
+using Simple.ServiceBus.Extensions;
 using Simple.ServiceBus.Infrastructure;
 
 namespace Simple.ServiceBus.Publishing
@@ -13,14 +15,19 @@ namespace Simple.ServiceBus.Publishing
             _namespaceManager = namespaceManager;
         }
 
-        public TopicDescription Get<T>()
+        public async Task<TopicDescription> Get<T>()
         {
             var topicName = string.Format("Topic_{0}", typeof(T).Name);
-            
-            if (!_namespaceManager.TopicExists(topicName))
-                _namespaceManager.CreateTopic(topicName);
 
-            return _namespaceManager.GetTopic(topicName);
+            var existsTask = _namespaceManager.TopicExistsAsync(topicName, null);
+            var createTask = _namespaceManager.CreateTopicAsync(topicName, null);
+            var getTask = _namespaceManager.GetTopicAsync(topicName, null);
+            
+            if (await existsTask)
+            {
+                return await getTask;
+            }
+            return await createTask;
         }
 
     }

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>Simple.ServiceBus</id>
-    <version>0.1.3-alpha</version>
+    <version>0.1.6</version>
     <title>Simple.ServiceBus (Windows Server Service Bus)</title>
     <authors>Per Ökvist</authors>
     <owners />

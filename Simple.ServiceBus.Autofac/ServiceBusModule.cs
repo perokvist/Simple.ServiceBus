@@ -14,22 +14,22 @@ namespace Simple.ServiceBus.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterAssemblyTypes(System.Reflection.Assembly.GetAssembly(typeof (IServiceBus)))
-                .Except<Subscription.SubscriptionConfigurationRepository>()
+            builder.RegisterAssemblyTypes(System.Reflection.Assembly.GetAssembly(typeof(IServiceBus)))
                 .AsImplementedInterfaces()
                 .SingleInstance();
-
+            
             builder.Register(x => NamespaceManager.Create())
                 .AsSelf()
                 .SingleInstance();
+            
+            //TODO support settings on the factory, and possible multiple factories
+            //var m1 = MessagingFactory.Create();
+            //var settings = m1.GetSettings();
+            //settings.NetMessagingTransportSettings.BatchFlushInterval = TimeSpan.FromMilliseconds(50);
+            
             builder.Register(x => MessagingFactory.Create())
                 .AsSelf()
                 .SingleInstance();
-
-            builder.RegisterType<SubscriptionConfigurationRepository>()
-                .AsImplementedInterfaces()
-                .SingleInstance();
-
 
         }
     }

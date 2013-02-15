@@ -32,15 +32,14 @@ var container = new ContainerBuilder()
 
 #Next
 
-* Remove IHandle (or add helper base class, iik!)
 * Add Configuration support for SubscriptionClient sufix
-* Possiblity to unsubscribe, close client via SubscriptoinMangager
 * Commadning scenario, Maybe a version of listen for named process, that only allows one recipient
 * Command scenario, proccessmanager that start/stop subscription of registered handlers
-* Send message with beginSend, endSend
-* Retrieve and process messages async/parallel
+* Retrieve and process messages async/parallel, config parallel
 * Deadletter/fault handling
 * Transient support
+
+http://msdn.microsoft.com/en-us/library/windowsazure/hh528527.aspx
 
 ### Downloads
 
