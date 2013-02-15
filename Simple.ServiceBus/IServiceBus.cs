@@ -9,7 +9,7 @@ namespace Simple.ServiceBus
 {
     public interface IServiceBus
     {
-        Task Publish<T>(T message);
+        Task PublishAsync<T>(T message);
         IDisposable Subscribe<T>(IObserver<T> handler,SubscriptionConfiguration configuration=null);
     }
 }

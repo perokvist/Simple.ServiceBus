@@ -7,31 +7,21 @@ namespace Simple.ServiceBus.Autofac
 {
     public static class Extensions
     {
-        public static BuilderInitialized RegisterServiceBus(this ContainerBuilder builder)
+        public static ContainerBuilder RegisterServiceBus(this ContainerBuilder builder)
         {
             builder.RegisterModule(new ServiceBusModule());
-            return new BuilderInitialized(builder);
+            return builder;
         }
 
-        public static ContainerBuilder RegisterObservers(this BuilderInitialized builder, Assembly assembly)
+        public static ContainerBuilder RegisterObservers(this ContainerBuilder builder, Assembly assembly)
         {
-            builder.Builder.RegisterAssemblyTypes(assembly)
+            builder.RegisterAssemblyTypes(assembly)
                 .Where(t => t.GetInterfaces().Where(i => i.IsGenericType)
                 .Any(contract => contract.GetGenericTypeDefinition() == typeof(IObserver<>)))
                 .AsSelf()
                 .AsImplementedInterfaces();
-            return builder.Builder;
+            return builder;
         }
     }
-
-    public class BuilderInitialized 
-    {
-        public BuilderInitialized(ContainerBuilder builder)
-        {
-            Builder = builder;
-        }
-        
-        internal ContainerBuilder Builder { get; private set; }
-    }
-
+    
 }

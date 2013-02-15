@@ -1,4 +1,3 @@
-using System;
 using Autofac;
 using Messages;
 using Simple.ServiceBus.Autofac;
@@ -31,26 +30,8 @@ namespace Simple.ServiceBus.Demo.Sub
                 new SubscriptionConfigurationService(resolver,
                  map => map.ListenTo<SimpleMessage>().Using<SimpleHandler>().WithConfiguration(new SubscriptionConfiguration("Test_1"))
                     ));
-            serviceConfig.WhenStarted(sv => sv.Start());
-            serviceConfig.WhenStopped(sv => sv.Stop());
-        }
-    }
-
-    public class SimpleHandler : IObserver<SimpleMessage>
-    {
-        public void OnCompleted()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnError(Exception error)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void OnNext(SimpleMessage value)
-        {
-            Console.WriteLine("Title: {0}, Throughput:{1}", value.Title, DateTime.Now - value.DateTime);
+            serviceConfig.WhenStarted(service => service.Start());
+            serviceConfig.WhenStopped(service => service.Stop());
         }
     }
 }

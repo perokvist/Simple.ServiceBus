@@ -25,11 +25,10 @@ namespace Simple.ServiceBus
         IDisposable IServiceBus.Subscribe<T>(IObserver<T> handler, SubscriptionConfiguration configuration)
         {
             configuration = configuration ?? new SubscriptionConfiguration(Guid.NewGuid().ToString());
-            //TODO clear topics
             return _subscriptionManager.Subscribe(handler, configuration);
         }
 
-        Task IServiceBus.Publish<T>(T message)
+        Task IServiceBus.PublishAsync<T>(T message)
         {
             return _messageDispatcher.Publish(message);
         }

@@ -40,8 +40,21 @@
     <Reference Include="Autofac.Configuration">
       <HintPath>..\packages\Autofac.2.6.3.862\lib\NET40\Autofac.Configuration.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.ServiceBus, Version=1.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\ServiceBus.v1_0.1.0.1.0\lib\net40-full\Microsoft.ServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="Simple.ServiceBus, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Simple.ServiceBus.0.1.6\lib\net45\Simple.ServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="Simple.ServiceBus.Autofac, Version=0.1.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Simple.ServiceBus.Autofac.0.1.6\lib\net45\Simple.ServiceBus.Autofac.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,7 +64,6 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SimpleHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -61,14 +73,6 @@
     <ProjectReference Include="..\Messages\Messages.csproj">
       <Project>{CD2A0C84-2775-4B8A-9080-CBF9CAF1FE84}</Project>
       <Name>Messages</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Simple.ServiceBus.Autofac\Simple.ServiceBus.Autofac.csproj">
-      <Project>{98BE60C9-1964-4D87-82CD-5EEFBDA5370A}</Project>
-      <Name>Simple.ServiceBus.Autofac</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Simple.ServiceBus\Simple.ServiceBus.csproj">
-      <Project>{FC7187DF-E3D5-4C8F-A7AC-1076AB56E8EC}</Project>
-      <Name>Simple.ServiceBus</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

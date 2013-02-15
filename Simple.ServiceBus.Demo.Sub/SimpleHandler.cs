@@ -1,7 +1,8 @@
+
 using System;
 using Messages;
 
-namespace Simple.ServiceBus.Demo.Pub
+namespace Simple.ServiceBus.Demo.Sub
 {
     public class SimpleHandler : IObserver<SimpleMessage>
     {
@@ -12,12 +13,12 @@ namespace Simple.ServiceBus.Demo.Pub
 
         public void OnError(Exception error)
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Error: {0}, something went pear shaped", error.Message);
         }
 
         public void OnNext(SimpleMessage value)
         {
-            Console.WriteLine(string.Format("Received (autofac) '{0}' with message id of {1}", value.Title, value.Id));
+            Console.WriteLine("Title: {0}, Throughput:{1}", value.Title, DateTime.Now - value.DateTime);
         }
     }
 }

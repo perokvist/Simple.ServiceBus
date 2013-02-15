@@ -22,7 +22,6 @@ namespace Simple.ServiceBus.Demo.Pub
         {
             var container = new ContainerBuilder()
                 .RegisterServiceBus()
-                .RegisterObservers(System.Reflection.Assembly.GetExecutingAssembly())
                 .Build();
 
             var serviceBus = container.Resolve<IServiceBus>();
@@ -42,7 +41,7 @@ namespace Simple.ServiceBus.Demo.Pub
         private static Task Send(IServiceBus serviceBus, string message)
         {
             var tasks = Enumerable.Range(0, 25)
-                .Select<int, Task>(i => serviceBus.Publish(
+                .Select<int, Task>(i => serviceBus.PublishAsync(
                     new SimpleMessage
                     {
                         Title = message + i,

@@ -22,6 +22,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple.ServiceBus.Demo.Pub"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simple.ServiceBus.Demo.Sub", "Simple.ServiceBus.Demo.Sub\Simple.ServiceBus.Demo.Sub.csproj", "{7FE4ED56-D8A4-4F25-A453-765DA29F3B8C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NuGet.Simple.ServiceBus.Autofac", "NuGet.Simple.ServiceBus.Autofac\NuGet.Simple.ServiceBus.Autofac.csproj", "{7123003A-C4EC-4DC6-899C-74FBF03C8516}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "packages", "packages", "{66944734-D8CD-420E-8753-C1D9FE580893}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,8 +56,19 @@ Global
 		{7FE4ED56-D8A4-4F25-A453-765DA29F3B8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FE4ED56-D8A4-4F25-A453-765DA29F3B8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FE4ED56-D8A4-4F25-A453-765DA29F3B8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7123003A-C4EC-4DC6-899C-74FBF03C8516}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7123003A-C4EC-4DC6-899C-74FBF03C8516}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7123003A-C4EC-4DC6-899C-74FBF03C8516}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7123003A-C4EC-4DC6-899C-74FBF03C8516}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F5CDA2A9-8365-43A5-8C0E-CB226BE52344} = {6B382E9F-A32E-47B6-86C6-7ADBB8993309}
+		{7FE4ED56-D8A4-4F25-A453-765DA29F3B8C} = {6B382E9F-A32E-47B6-86C6-7ADBB8993309}
+		{CD2A0C84-2775-4B8A-9080-CBF9CAF1FE84} = {6B382E9F-A32E-47B6-86C6-7ADBB8993309}
+		{0451BAEF-DF2E-4B98-8644-94EE9415E389} = {66944734-D8CD-420E-8753-C1D9FE580893}
+		{7123003A-C4EC-4DC6-899C-74FBF03C8516} = {66944734-D8CD-420E-8753-C1D9FE580893}
 	EndGlobalSection
 EndGlobal
